@@ -1,6 +1,3 @@
-
-#-*- coding: utf-8 -*-
-
 # Copyright (c) 2023 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
@@ -16,9 +13,17 @@ from .hexapod_param import HexapodParam
 
 class HexapodRangeOfMotion:
 
-    def __init__(self, hexapod_leg_range_calc: HexapodLegRangeCalculator, hexapod_param: HexapodParam,
-                 ax: axes.Axes, *, color: str = 'black', upper_alpha: float= 0.3, lowwer_alpha: float= 1.0) -> None:
-        '''
+    def __init__(
+        self,
+        hexapod_leg_range_calc: HexapodLegRangeCalculator,
+        hexapod_param: HexapodParam,
+        ax: axes.Axes,
+        *,
+        color: str = "black",
+        upper_alpha: float = 0.3,
+        lowwer_alpha: float = 1.0
+    ) -> None:
+        """
         Parameters
         ----------
         hexapod_leg_range_calc : HexapodLegRangeCalculator
@@ -33,7 +38,7 @@ class HexapodRangeOfMotion:
             上向きの可動範囲の透明度．
         lowwer_alpha : float
             下向きの可動範囲の透明度．
-        '''
+        """
         self._calc = hexapod_leg_range_calc
         self._param = hexapod_param
         self._ax = ax
@@ -43,32 +48,40 @@ class HexapodRangeOfMotion:
         self.set_lowwer_alpha(lowwer_alpha)
 
         self._STEP = 0.001
-        
+
         # 例外を投げる
         if self._calc == None:
             raise ValueError("hexapod_leg_range_calc is None")
-        
+
         if self._param == None:
             raise ValueError("hexapod_param is None")
-        
+
         if self._ax == None:
             raise ValueError("ax is None")
 
     def render(self) -> None:
-        '''脚の可動範囲を描画する．'''
+        """脚の可動範囲を描画する．"""
 
         print("HexapodLegRangeCalculator.render: Draw the range of motion of the legs")
-        print("HexapodLegRangeCalculator.render: " 
-              + "color: " + self._color + ", " 
-              + "upper_alpha: " + str(self._upper_alpha) 
-              + ", lowwer_alpha: " + str(self._lowwer_alpha)
-              + ", (step: " + str(self._STEP) + ")")
+        print(
+            "HexapodLegRangeCalculator.render: "
+            + "color: "
+            + self._color
+            + ", "
+            + "upper_alpha: "
+            + str(self._upper_alpha)
+            + ", lowwer_alpha: "
+            + str(self._lowwer_alpha)
+            + ", (step: "
+            + str(self._STEP)
+            + ")"
+        )
 
         self.render_upper_leg_range()
         self.render_lower_leg_range()
 
     def render_upper_leg_range(self) -> None:
-        '''逆運動学解2つのうち，上向きの可動範囲を描画する．'''
+        """逆運動学解2つのうち，上向きの可動範囲を描画する．"""
 
         self._make_leg_range(
             self._param.theta2_min,
@@ -76,11 +89,11 @@ class HexapodRangeOfMotion:
             0,
             self._param.theta3_max,
             self._color,
-            self._upper_alpha
+            self._upper_alpha,
         )
 
     def render_lower_leg_range(self) -> None:
-        '''逆運動学解2つのうち，下向きの可動範囲を描画する．'''
+        """逆運動学解2つのうち，下向きの可動範囲を描画する．"""
 
         self._make_leg_range(
             self._param.theta2_min,
@@ -88,57 +101,67 @@ class HexapodRangeOfMotion:
             self._param.theta3_min,
             0,
             self._color,
-            self._lowwer_alpha
+            self._lowwer_alpha,
         )
 
     def set_color(self, color: str) -> None:
-        '''
+        """
         色を設定する．
 
         Parameters
         ----------
         color : str
             色．
-        '''
+        """
 
         self._color = color
 
     def set_upper_alpha(self, alpha: float) -> None:
-        '''
+        """
         上向きの可動範囲の透明度を設定する．
 
         Parameters
         ----------
         alpha : float
             透明度．
-        '''
+        """
 
         self._upper_alpha = alpha
 
         # 例外を投げる
         if self._upper_alpha < 0 or self._upper_alpha > 1:
-            raise ValueError("The value of upper_alpha is out of range. The value must be between 0 and 1.")
+            raise ValueError(
+                "The value of upper_alpha is out of range. The value must be between 0 and 1."
+            )
 
     def set_lowwer_alpha(self, alpha: float) -> None:
-        '''
+        """
         下向きの可動範囲の透明度を設定する．
 
         Parameters
         ----------
         alpha : float
             透明度．
-        '''
+        """
 
         self._lowwer_alpha = alpha
 
         # 例外を投げる
         if self._lowwer_alpha < 0 or self._lowwer_alpha > 1:
-            raise ValueError("The value of lowwer_alpha is out of range. The value must be between 0 and 1.")
-        
+            raise ValueError(
+                "The value of lowwer_alpha is out of range. The value must be between 0 and 1."
+            )
+
     def _make_leg_range(
-            self, theta2_min: float, theta2_max: float, theta3_min: float, theta3_max: float, 
-            color_value: str, alpha_vaule: float) -> None:
-        '''
+        self,
+        theta2_min: float,
+        theta2_max: float,
+        theta3_min: float,
+        theta3_max: float,
+        color_value: str,
+        alpha_vaule: float,
+    ) -> None:
+        """
         脚の可動範囲を描画する．\n
         1つの間接を最大値に固定して,もう一つの間接を最小値から最大値まで動かす．\n
         次に,最小値に固定して,もう一つの間接を最小値から最大値まで動かす．\n
@@ -158,7 +181,7 @@ class HexapodRangeOfMotion:
             色．
         alpha_vaule : float
             透明度．
-        '''
+        """
 
         # minからmaxまでstep刻みで配列を作成
         femur_range = np.arange(theta2_min, theta2_max, self._STEP)
@@ -168,16 +191,22 @@ class HexapodRangeOfMotion:
         self._make_leg_line(femur_range, [theta3_min], color_value, alpha_vaule)
 
         # femur joint (min ~ max) , tibia joint (max)
-        self._make_leg_line(femur_range,[theta3_max],color_value, alpha_vaule)
+        self._make_leg_line(femur_range, [theta3_max], color_value, alpha_vaule)
 
         # femur joint (min) , tibia joint (min ~ max)
-        self._make_leg_line([theta2_min], tibia_range, color_value,alpha_vaule)
+        self._make_leg_line([theta2_min], tibia_range, color_value, alpha_vaule)
 
         # femur joint (max) , tibia joint (min ~ max)
         self._make_leg_line([theta2_max], tibia_range, color_value, alpha_vaule)
 
-    def _make_leg_line(self, theta2: List[float], theta3: List[float], color_value: str, alpha_vaule: float) -> None:
-        '''
+    def _make_leg_line(
+        self,
+        theta2: List[float],
+        theta3: List[float],
+        color_value: str,
+        alpha_vaule: float,
+    ) -> None:
+        """
         間接を回しながら，脚先の座標をプロットしていく．
 
         Parameters
@@ -190,7 +219,7 @@ class HexapodRangeOfMotion:
             色．
         alpha_vaule : float
             透明度．
-        '''
+        """
 
         line_x = []
         line_z = []

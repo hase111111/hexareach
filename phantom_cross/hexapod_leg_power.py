@@ -1,7 +1,5 @@
 """hexapod_leg_power.py"""
 
-# -*- coding: utf-8 -*-
-
 # Copyright (c) 2023-2025 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php

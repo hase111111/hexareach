@@ -15,7 +15,7 @@ if __name__ == "__main__":
     param1 = pc.HexapodParam()
     graph1 = pc.GraphDisplayer()
 
-    fig, ax1, ax2 =graph1.display(
+    fig, ax1, ax2 = graph1.display(
         # set display options
         display_table=False,
         display_circle=False,
@@ -25,14 +25,13 @@ if __name__ == "__main__":
         display_mouse_grid=False,
         # set file name to save the image
         image_file_name="result/sample_main4.png",
-
         x_min=-150.0,
         x_max=350.0,
         z_min=-250.0,
         z_max=250,
         # do not display the graph
-        do_not_show=True
-        )
+        do_not_show=True,
+    )
     param = pc.HexapodParam()
 
     # Change the robot conditions.
