@@ -1,8 +1,9 @@
+"""mouse_grid_renderer.py"""
+
 # Copyright (c) 2023 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-import matplotlib.lines as lines
 import matplotlib.axes as axes
 import matplotlib.pyplot as plt
 
@@ -22,10 +23,10 @@ class MouseGridRenderer:
         self._fig = fig
         self._ax = ax
 
-        if self._fig == None:
+        if self._fig is None:
             raise ValueError("MouseGridRenderer.__init__: fig is None")
 
-        if self._ax == None:
+        if self._ax is None:
             raise ValueError("MouseGridRenderer.__init__: ax is None")
 
         self.set_alpha(alpha)
@@ -76,7 +77,7 @@ class MouseGridRenderer:
         x = event.xdata
         y = event.ydata
 
-        if x == None or y == None:
+        if x is None or y is None:
             # マウスポイント地点が取得できなかった場合は何もしない．
             return
 
