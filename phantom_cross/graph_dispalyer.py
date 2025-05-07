@@ -1,6 +1,10 @@
+"""phantom_cross/graph_dispalyer.py"""
+
 # Copyright (c) 2023 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
+
+from typing import Tuple
 
 # モジュールのインポート
 import matplotlib as mpl
@@ -8,8 +12,6 @@ import matplotlib as mpl
 mpl.use("tkagg")
 import matplotlib.axes as axes
 import matplotlib.pyplot as plt
-
-from typing import Tuple
 
 from .hexapod_leg_power import HexapodLegPower
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
