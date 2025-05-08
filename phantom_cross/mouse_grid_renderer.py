@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 
 class MouseGridRenderer:
+    """a class to draw a grid on the mouse point"""
 
     def __init__(
         self,
@@ -93,7 +94,7 @@ class MouseGridRenderer:
         Parameters
         ----------
         alpha : float
-            透明度
+            透明度 (0.0 ~ 1.0)
         """
 
         self._alpha = alpha
