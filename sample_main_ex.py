@@ -1,8 +1,11 @@
-# Copyright (c) 2023 Taisei Hasegawa
+"""
+sample_main_ex.py
+This is a sample code to output the graph for the paper.
+"""
+
+# Copyright (c) 2023-2025 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
-
-# Sample code to change robot conditions and display graphs
 
 import math
 
