@@ -1,8 +1,8 @@
 
-# PhantomX Leg Display
+# hexareach
 
 Trossen Robotics社のPhantomX Hexapodの脚の可動域を表示するプログラムです．
-卒業研究のために作成したプログラムで，研究の題目は"グラフ探索を用いた多脚ロボットの歩容パターン生成における脚軌道生成失敗時の歩容パターンの再評価手法"です．
+卒業研究のために作成したプログラムです．
 
 <div align="center">
     <img src="/docs/img/table.jpg" width="95%">
