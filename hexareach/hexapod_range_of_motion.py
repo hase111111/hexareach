@@ -17,7 +17,7 @@ class HexapodRangeOfMotion:
     """
     脚の可動範囲を描画するクラス．
     """
-    
+
     def __init__(
         self,
         hexapod_leg_range_calc: HexapodLegRangeCalculator,
@@ -52,7 +52,7 @@ class HexapodRangeOfMotion:
         self.set_upper_alpha(upper_alpha)
         self.set_lowwer_alpha(lowwer_alpha)
 
-        self._STEP = 0.001
+        self._step = 0.001
 
         # 例外を投げる
         if self._calc is None:
@@ -177,8 +177,8 @@ class HexapodRangeOfMotion:
         """
 
         # minからmaxまでstep刻みで配列を作成
-        femur_range = np.arange(theta2_min, theta2_max, self._STEP)
-        tibia_range = np.arange(theta3_min, theta3_max, self._STEP)
+        femur_range = np.arange(theta2_min, theta2_max, self._step)
+        tibia_range = np.arange(theta3_min, theta3_max, self._step)
 
         # femur joint (min ~ max) , tibia joint (min)
         self._make_leg_line(femur_range, np.array([theta3_min]), color_value, alpha_vaule)
@@ -217,12 +217,12 @@ class HexapodRangeOfMotion:
         line_x = []
         line_z = []
 
-        for i in range(len(theta2)):
-            for j in range(len(theta3)):
-                res = self._calc.get_leg_position_xz(theta2[i], theta3[j])
+        for _, t2 in enumerate(theta2):
+            for _, t3 in enumerate(theta3):
+                res, x, z = self._calc.get_leg_position_xz(t2, t3)
 
-                if res[0]:
-                    line_x.append(res[1])
-                    line_z.append(res[2])
+                if res:
+                    line_x.append(x)
+                    line_z.append(z)
 
         self._ax.plot(line_x, line_z, color=color_value, alpha=alpha_vaule)
