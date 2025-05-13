@@ -10,7 +10,7 @@ from setuptools import setup, find_packages  # type: ignore[import]
 
 setup(
     name="hexareach",  # パッケージ名（pip listで表示される）
-    version="1.0.1",  # バージョン.
+    version="2.0.0",  # バージョン.
     description="Inverse kinematics of PhantomX and display of results.",  # 説明.
     license="MIT",  # ライセンス.
     author="taisei hasegawa",  # 作者名.
