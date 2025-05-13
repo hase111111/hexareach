@@ -1,4 +1,8 @@
-# Copyright (c) 2023 Taisei Hasegawa
+"""
+hexapod_range_of_motion.py
+"""
+
+# Copyright (c) 2023-2025 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 

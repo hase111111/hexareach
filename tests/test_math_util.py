@@ -1,6 +1,14 @@
+"""
+test_math_util.py
+"""
+
+# Copyright (c) 2023-2025 Taisei Hasegawa
+# Released under the MIT license
+# https://opensource.org/licenses/mit-license.php
 
 import unittest
 import phantom_cross as pc
+
 
 class TestTriangleChecker(unittest.TestCase):
     def setUp(self):
@@ -18,5 +26,6 @@ class TestTriangleChecker(unittest.TestCase):
         self.assertFalse(self.triangle_checker.can_make_triangle(1, 2, 1))
         self.assertFalse(self.triangle_checker.can_make_triangle(2, 1, 1))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

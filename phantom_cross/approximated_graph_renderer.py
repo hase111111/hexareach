@@ -1,4 +1,8 @@
-# Copyright (c) 2023 Taisei Hasegawa
+"""
+approximated_graph_renderer.py
+"""
+
+# Copyright (c) 2023-2025 Taisei Hasegawa
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
