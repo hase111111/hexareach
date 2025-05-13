@@ -17,7 +17,7 @@ from .hexapod_leg_power import HexapodLegPower
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .approximated_graph_renderer import ApproximatedGraphRenderer
 from .hexapod_leg_renderer import HexapodLegRenderer
-from .mouse_grid_renderer import MouseGridRenderer
+from .render.mouse_grid_renderer import MouseGridRenderer
 from .hexapod_range_of_motion import HexapodRangeOfMotion
 from .hexapod_param import HexapodParam
 

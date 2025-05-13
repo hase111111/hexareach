@@ -7,8 +7,8 @@ __init__.py
 # https://opensource.org/licenses/mit-license.php
 
 
-from .triangle_checker import TriangleChecker
+from .mouse_grid_renderer import MouseGridRenderer
 
 __all__ = [
-    "TriangleChecker",
+    "MouseGridRenderer",
 ]
