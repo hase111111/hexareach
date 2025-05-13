@@ -7,7 +7,7 @@ test_math_util.py
 # https://opensource.org/licenses/mit-license.php
 
 import unittest
-import phantom_cross as pc
+import hexareach as pc
 
 
 class TestTriangleChecker(unittest.TestCase):

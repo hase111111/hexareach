@@ -7,7 +7,7 @@ Sample to calculate force distribution.
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-import phantom_cross as pc
+import hexareach as pc
 
 
 if __name__ == "__main__":

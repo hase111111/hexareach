@@ -9,7 +9,7 @@ This is a sample code to output the graph for the paper.
 
 import math
 
-import phantom_cross as pc
+import hexareach as pc
 
 
 if __name__ == "__main__":

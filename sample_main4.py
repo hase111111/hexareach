@@ -9,7 +9,7 @@ Sample code for adding dots and lines to a graph
 
 import matplotlib.pyplot as plt
 
-import phantom_cross as pc
+import hexareach as pc
 
 
 if __name__ == "__main__":

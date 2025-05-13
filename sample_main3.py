@@ -10,7 +10,7 @@ Sample code to change robot conditions and display graphs
 
 import math
 
-import phantom_cross as pc
+import hexareach as pc
 
 
 if __name__ == "__main__":

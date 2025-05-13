@@ -9,7 +9,7 @@ setup.py
 from setuptools import setup, find_packages  # type: ignore[import]
 
 setup(
-    name="phantom_cross",  # パッケージ名（pip listで表示される）
+    name="hexareach",  # パッケージ名（pip listで表示される）
     version="1.0.1",  # バージョン.
     description="Inverse kinematics of PhantomX and display of results.",  # 説明.
     license="MIT",  # ライセンス.
@@ -24,7 +24,7 @@ setup(
     ],  # 依存するパッケージのリスト.
     entry_points={
         "console_scripts": [
-            "phantom_cross = phantom_cross.__main__:main",
+            "hexareach = hexareach.__main__:main",
         ]
     },
 )

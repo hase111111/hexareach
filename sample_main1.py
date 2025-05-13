@@ -8,7 +8,7 @@ This is a sample code to display the phantom X graph.
 # https://opensource.org/licenses/mit-license.php
 
 
-import phantom_cross as pc
+import hexareach as pc
 
 
 if __name__ == "__main__":
