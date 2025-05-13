@@ -21,16 +21,21 @@ class MouseGridRenderer:
         alpha: float = 0.5,
         color: str = "black"
     ) -> None:
-        self._alreadly_init: bool = False  # 初期化フラグ
+        self._alreadly_init: bool = False
 
         self._fig = fig
         self._ax = ax
 
         if self._fig is None:
-            raise ValueError("MouseGridRenderer.__init__: fig is None")
+            raise ValueError(f"{__name__}: fig is None")
 
         if self._ax is None:
-            raise ValueError("MouseGridRenderer.__init__: ax is None")
+            raise ValueError(f"{__name__}: ax is None")
+
+        self._x_axis = self._ax.axhline(-1)
+        self._x_axis.set_linestyle("--")
+        self._y_axis = self._ax.axvline(-1)
+        self._y_axis.set_linestyle("--")
 
         self.set_alpha(alpha)
         self.set_color(color)
@@ -38,29 +43,16 @@ class MouseGridRenderer:
     def render(self) -> None:
         """
         イベントを設定する,2度目以降の呼び出しは無視される．\n
-        この関数を呼んだ後に,matplotlibのfigureオブジェクトを表示すると,マウスポイント地点を表示するための線が表示される．\n
-        plt.show()の前に呼び出す,またはこの関数の後にplt.draw()を呼び出す必要がある．
+        この関数を呼んだ後に matplotlib の figure オブジェクトを表示すると,マウスポイント地点を表示するための線が表示される．\n
+        plt.show() の前に呼び出す, またはこの関数の後に plt.draw() を呼び出す必要がある．
         """
 
-        print("MouseGridRenderer.render: Starts drawing the mouse grid")
-        print(
-            "MouseGridRenderer.render: "
-            + "alpha: "
-            + str(self._alpha)
-            + ", color: "
-            + self._color
-        )
+        print(f"{__name__}: Starts drawing the mouse grid")
+        print(f"{__name__}: alpha: {self._alpha}, color: {self._color}")
 
         if self._alreadly_init:
-            print("MouseGridRenderer.set_event: Already initialized.")
+            print(f"{__name__}: Already initialized.")
             return
-
-        # マウスポイント地点を表示するための線を登録，
-        self._y_axis = self._ax.axvline(-1)
-        self._x_axis = self._ax.axhline(-1)
-
-        self._y_axis.set_linestyle("--")
-        self._x_axis.set_linestyle("--")
 
         self._y_axis.set_alpha(self._alpha)
         self._x_axis.set_alpha(self._alpha)
@@ -85,8 +77,8 @@ class MouseGridRenderer:
             return
 
         # マウスポイント地点を表示するための線の位置を更新．
-        self._y_axis.set_xdata(x)
-        self._x_axis.set_ydata(y)
+        self._y_axis.set_xdata([float(x)])
+        self._x_axis.set_ydata([float(y)])
 
     def set_alpha(self, alpha: float) -> None:
         """
@@ -101,9 +93,11 @@ class MouseGridRenderer:
 
         self._alpha = alpha
 
-        # 値が異常な場合は例外を投げる
-        if self._alpha < 0.0 or self._alpha > 1.0:
-            raise ValueError("MouseGridRenderer.set_alpha: alpha is out of range")
+        # clamp alpha to 0.0 ~ 1.0
+        if self._alpha < 0.0:
+            self._alpha = 0.0
+        elif self._alpha > 1.0:
+            self._alpha = 1.0
 
     def set_color(self, color: str) -> None:
         """
