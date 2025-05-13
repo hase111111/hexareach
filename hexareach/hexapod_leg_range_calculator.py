@@ -10,7 +10,7 @@ import math
 
 from typing import Tuple, List
 
-from .triangle_checker import TriangleChecker
+from .math.triangle_checker import TriangleChecker
 from .hexapod_param import HexapodParam
 
 
@@ -166,7 +166,7 @@ class HexapodLegRangeCalculator:
 
         # 長さが足りない場合は計算できない．
         triangle_checker = TriangleChecker()
-        if not triangle_checker.can_make_triangle(
+        if not triangle_checker.check(
             self._param.tibia_length,
             self._param.femur_length,
             math.sqrt(math.pow(x - self._param.coxa_length, 2.0) + math.pow(z, 2.0)),

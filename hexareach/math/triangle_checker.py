@@ -10,7 +10,11 @@ import numpy as np
 
 
 class TriangleChecker:
-    def can_make_triangle(self, len1: float, len2: float, len3: float) -> bool:
+    """
+    三角形の成立を判定するクラス．
+    """
+
+    def check(self, len1: float, len2: float, len3: float) -> bool:
         """
         与えられた3つの辺の長さから、三角形が成立するかを判定する関数．\n
         三角形が作れるならばTrueを返す．\n
@@ -40,9 +44,3 @@ class TriangleChecker:
             return False
 
         return True
-
-
-if __name__ == "__main__":
-    tc = TriangleChecker()
-    print(tc.can_make_triangle(3, 4, 5))  # True
-    print(tc.can_make_triangle(3, 4, 7))  # False
