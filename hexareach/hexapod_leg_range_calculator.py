@@ -153,7 +153,7 @@ class HexapodLegRangeCalculator:
             脚の関節の角度のリスト,coxa(今回は0で固定),femur,tibiaの順 [rad]\n
         """
         joint_pos = [[], []]
-        angle = []
+        angle: List[float] = []
 
         # 脚の付け根．
         joint_pos[0].append(0)
@@ -171,8 +171,8 @@ class HexapodLegRangeCalculator:
             self._param.femur_length,
             math.sqrt(math.pow(x - self._param.coxa_length, 2.0) + math.pow(z, 2.0)),
         ):
-            angle_ft = math.atan2(z, x - self._param.coxa_length)
-            angle_ft_phase = angle_ft + math.pi  # 180度位相をずらす．
+            angle_ft: float  = math.atan2(z, x - self._param.coxa_length)
+            angle_ft_phase: float  = angle_ft + math.pi  # 180度位相をずらす．
             angle_ft_phase = (
                 angle_ft_phase > math.pi * 2.0
                 and angle_ft_phase - math.pi * 2.0
@@ -208,8 +208,8 @@ class HexapodLegRangeCalculator:
             )
 
             # 距離が近い方を選択．
-            angle_f = angle_ft
-            angle_t = 0
+            angle_f: float = angle_ft
+            angle_t: float  = 0.0
 
             if distance > distance_phase:
                 angle_f = angle_ft_phase
@@ -296,11 +296,11 @@ class HexapodLegRangeCalculator:
         angle = []
         angle.append(0.0)  # 第1関節の角度は0度．
 
-        trueX = x - self._param.coxa_length
-        im = math.sqrt(math.pow(trueX, 2) + math.pow(z, 2))  # length of imaginary leg.
+        true_x = x - self._param.coxa_length
+        im = math.sqrt(math.pow(true_x, 2) + math.pow(z, 2))  # length of imaginary leg.
 
         # get femur angle above horizon...
-        q1 = -math.atan2(z, trueX)
+        q1 = -math.atan2(z, true_x)
         d1 = (
             math.pow(self._param.femur_length, 2)
             - math.pow(self._param.tibia_length, 2)
