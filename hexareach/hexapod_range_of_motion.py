@@ -6,8 +6,6 @@ hexapod_range_of_motion.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-from typing import List
-
 import matplotlib.axes as axes
 import numpy as np
 
@@ -16,7 +14,10 @@ from .hexapod_param import HexapodParam
 
 
 class HexapodRangeOfMotion:
-
+    """
+    脚の可動範囲を描画するクラス．
+    """
+    
     def __init__(
         self,
         hexapod_leg_range_calc: HexapodLegRangeCalculator,
@@ -66,20 +67,8 @@ class HexapodRangeOfMotion:
     def render(self) -> None:
         """脚の可動範囲を描画する．"""
 
-        print("HexapodLegRangeCalculator.render: Draw the range of motion of the legs")
-        print(
-            "HexapodLegRangeCalculator.render: "
-            + "color: "
-            + self._color
-            + ", "
-            + "upper_alpha: "
-            + str(self._upper_alpha)
-            + ", lowwer_alpha: "
-            + str(self._lowwer_alpha)
-            + ", (step: "
-            + str(self._STEP)
-            + ")"
-        )
+        print(f"{__name__}: Draw the range of motion of the legs")
+        print(f"{__name__}: {self._color= }, {self._upper_alpha= }, {self._lowwer_alpha= }")
 
         self.render_upper_leg_range()
         self.render_lower_leg_range()
@@ -192,21 +181,21 @@ class HexapodRangeOfMotion:
         tibia_range = np.arange(theta3_min, theta3_max, self._STEP)
 
         # femur joint (min ~ max) , tibia joint (min)
-        self._make_leg_line(femur_range, [theta3_min], color_value, alpha_vaule)
+        self._make_leg_line(femur_range, np.array([theta3_min]), color_value, alpha_vaule)
 
         # femur joint (min ~ max) , tibia joint (max)
-        self._make_leg_line(femur_range, [theta3_max], color_value, alpha_vaule)
+        self._make_leg_line(femur_range, np.array([theta3_max]), color_value, alpha_vaule)
 
         # femur joint (min) , tibia joint (min ~ max)
-        self._make_leg_line([theta2_min], tibia_range, color_value, alpha_vaule)
+        self._make_leg_line(np.array([theta2_min]), tibia_range, color_value, alpha_vaule)
 
         # femur joint (max) , tibia joint (min ~ max)
-        self._make_leg_line([theta2_max], tibia_range, color_value, alpha_vaule)
+        self._make_leg_line(np.array([theta2_max]), tibia_range, color_value, alpha_vaule)
 
     def _make_leg_line(
         self,
-        theta2: List[float],
-        theta3: List[float],
+        theta2: np.ndarray,
+        theta3: np.ndarray,
         color_value: str,
         alpha_vaule: float,
     ) -> None:

@@ -27,7 +27,7 @@ class HexapodLegRangeCalculator:
         self._param = hexapod_param
         self._init_approximate_max_leg_raudus()  # 脚の最大半径を計算する．
 
-        if self._param == None:
+        if self._param is None:
             raise ValueError("param_instance is None")
 
         self._min_radius = self._param.approx_min_radius
