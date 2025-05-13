@@ -12,8 +12,10 @@ def main():
     Main function to display package information.
     """
 
-    print("phantom_cross" + " " + "1.0.1")
-    print("This is a package for hexapod robot.")
+    print(__name__)
+    print("Copyright (c) 2023-2025 Taisei Hasegawa")
+    print("Released under the MIT license")
+    print("https://opensource.org/licenses/mit-license.php")
 
 
 if __name__ == "__main__":

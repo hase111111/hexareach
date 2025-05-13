@@ -17,8 +17,8 @@ from .triangle_checker import TriangleChecker
 from .graph_dispalyer import GraphDisplayer
 from .hexapod_param import HexapodParam
 
-# パッケージのバージョン
-__version__ = "1.0.1"
+# パッケージのバージョンはsetup.pyに記載
+# The package version is specified in setup.py
 
 __all__ = [
     "ApproximatedGraphRenderer",
