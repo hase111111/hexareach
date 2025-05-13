@@ -1,5 +1,5 @@
 """
-main.py
+__main__.py
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
