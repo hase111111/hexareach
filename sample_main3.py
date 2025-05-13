@@ -1,4 +1,7 @@
-"""Sample code to change robot conditions and display graphs"""
+"""
+sample_main3.py
+Sample code to change robot conditions and display graphs
+"""
 
 # Copyright (c) 2023 Taisei Hasegawa
 # Released under the MIT license
