@@ -6,10 +6,11 @@ hexapod_leg_renderer.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
+import math
+
 import matplotlib.axes as axes
 import matplotlib.pyplot as plt
 import matplotlib.patches as patch
-import math
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .hexapod_param import HexapodParam

@@ -6,10 +6,10 @@ hexapod_range_of_motion.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
+from typing import List
+
 import matplotlib.axes as axes
 import numpy as np
-
-from typing import List
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .hexapod_param import HexapodParam
