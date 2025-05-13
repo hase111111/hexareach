@@ -43,7 +43,8 @@ class MouseGridRenderer:
     def render(self) -> None:
         """
         イベントを設定する,2度目以降の呼び出しは無視される．\n
-        この関数を呼んだ後に matplotlib の figure オブジェクトを表示すると,マウスポイント地点を表示するための線が表示される．\n
+        この関数を呼んだ後に matplotlib の figure オブジェクトを表示すると,
+        マウスポイント地点を表示するための線が表示される．\n
         plt.show() の前に呼び出す, またはこの関数の後に plt.draw() を呼び出す必要がある．
         """
 
