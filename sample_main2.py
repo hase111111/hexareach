@@ -7,11 +7,11 @@ Sample to calculate force distribution.
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-import hexareach as pc
+import hexareach as hr
 
 
 if __name__ == "__main__":
-    graph = pc.GraphDisplayer()
+    graph = hr.GraphDisplayer()
 
     graph.display(
         # set display options.

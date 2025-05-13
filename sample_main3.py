@@ -10,11 +10,11 @@ Sample code to change robot conditions and display graphs
 
 import math
 
-import hexareach as pc
+import hexareach as hr
 
 
 if __name__ == "__main__":
-    param = pc.HexapodParam()
+    param = hr.HexapodParam()
 
     # Change the robot conditions.
     param.coxa_length = 0.0
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # param.torque_max = 1000.0
 
     # Display the phantom cross graph.
-    graph = pc.GraphDisplayer()
+    graph = hr.GraphDisplayer()
 
     graph.display(
         # use the changed robot conditions.

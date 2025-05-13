@@ -9,11 +9,11 @@ This is a sample code to output the graph for the paper.
 
 import math
 
-import hexareach as pc
+import hexareach as hr
 
 
 if __name__ == "__main__":
-    param = pc.HexapodParam()
+    param = hr.HexapodParam()
 
     # Change the robot conditions.
     param.coxa_length = 45.0
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     # param.torque_max = 3700.0
 
     # Display the phantom cross graph.
-    graph = pc.GraphDisplayer()
+    graph = hr.GraphDisplayer()
 
     graph.display(
         # use the changed robot conditions.

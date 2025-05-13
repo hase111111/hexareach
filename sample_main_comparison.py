@@ -8,12 +8,12 @@
 
 import math
 
-import hexareach as pc
+import hexareach as hr
 
 
 if __name__ == "__main__":
-    param1 = pc.HexapodParam()
-    graph1 = pc.GraphDisplayer()
+    param1 = hr.HexapodParam()
+    graph1 = hr.GraphDisplayer()
 
     fig, ax1, ax2 = graph1.display(
         # set display options
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         # do not display the graph
         do_not_show=True,
     )
-    param = pc.HexapodParam()
+    param = hr.HexapodParam()
 
     # Change the robot conditions.
     param.coxa_length = 45.0
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # param.torque_max = 3700.0
 
     # Display the phantom cross graph.
-    graph = pc.GraphDisplayer()
+    graph = hr.GraphDisplayer()
 
     graph.display(
         # use the changed robot conditions.
