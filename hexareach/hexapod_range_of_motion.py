@@ -54,13 +54,13 @@ class HexapodRangeOfMotion:
         self._STEP = 0.001
 
         # 例外を投げる
-        if self._calc == None:
+        if self._calc is None:
             raise ValueError("hexapod_leg_range_calc is None")
 
-        if self._param == None:
+        if self._param is None:
             raise ValueError("hexapod_param is None")
 
-        if self._ax == None:
+        if self._ax is None:
             raise ValueError("ax is None")
 
     def render(self) -> None:
