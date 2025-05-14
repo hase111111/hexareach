@@ -11,6 +11,10 @@ from typing import Protocol
 
 
 class HexapodParamProtocol(Protocol):
+    """
+    Hexapodのパラメータを格納するためのプロトコル．
+    HexapodParamクラスはこのプロトコルを実装する．
+    """
     coxa_length: float
     femur_length: float
     tibia_length: float
@@ -25,6 +29,9 @@ class HexapodParamProtocol(Protocol):
 
 
 class HexapodParam(HexapodParamProtocol):
+    """
+    PhantomXのパラメータを格納するクラス．
+    """
     coxa_length: float = 52.0  # [mm]
     femur_length: float = 66.0  # [mm]
     tibia_length: float = 130.0  # [mm]
