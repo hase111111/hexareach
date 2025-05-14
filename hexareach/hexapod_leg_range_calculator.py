@@ -11,16 +11,16 @@ import math
 from typing import Tuple, List
 
 from .math.triangle_checker import TriangleChecker
-from .hexapod_param import HexapodParam
+from .hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegRangeCalculator:
 
-    def __init__(self, hexapod_param: HexapodParam) -> None:
+    def __init__(self, hexapod_param: HexapodParamProtocol) -> None:
         """
         Parameters
         ----------
-        hexapod_param : HexapodParam
+        hexapod_param : HexapodParamProtocol
             パラメータを格納するためのインスタンス．
         """
         self._DEBUG_FLAG = False
@@ -344,31 +344,34 @@ class HexapodLegRangeCalculator:
 
     def is_theta1_in_range(self, theta1: float) -> bool:
         """
-        第1関節の角度が範囲内かを判定する．
+        第1関節の角度が範囲内かを判定する.
         """
+
         if theta1 < self._param.theta1_min or theta1 > self._param.theta1_max:
             return False
         return True
 
     def is_theta2_in_range(self, theta2: float) -> bool:
         """
-        第2関節の角度が範囲内かを判定する．
+        第2関節の角度が範囲内かを判定する.
         """
+
         if theta2 < self._param.theta2_min or theta2 > self._param.theta2_max:
             return False
         return True
 
     def is_theta3_in_range(self, theta3: float) -> bool:
         """
-        第3関節の角度が範囲内かを判定する．
+        第3関節の角度が範囲内かを判定する.
         """
+
         if theta3 < self._param.theta3_min or theta3 > self._param.theta3_max:
             return False
         return True
 
     def _init_approximate_max_leg_raudus(self) -> None:
         """
-        脚の最大半径を計算する privateメソッド．
+        脚の最大半径を計算する privateメソッド.
         """
 
         # 近似された脚の可動範囲の最大半径のリスト，z軸の座標軸の取り方が逆なので，zを反転させる．
@@ -431,7 +434,7 @@ class HexapodLegRangeCalculator:
 
     def _clamp_angle(self, angle: float) -> float:
         """
-        角度を-180 ~ 180の範囲にする．
+        角度を-180 ~ 180の範囲にする.
 
         Parameters
         ----------
