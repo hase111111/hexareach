@@ -132,7 +132,7 @@ class HexapodLegRangeCalculator:
 
     def calc_inverse_kinematics_xz(
         self, x: float, z: float, reverse_flag: bool = False
-    ) -> Tuple[bool, List[Tuple[float, float]], List[float]]:
+    ) -> Tuple[bool, List[List[float]], List[float]]:
         """
         逆運動学を計算する．
 
@@ -152,17 +152,17 @@ class HexapodLegRangeCalculator:
             脚の関節の座標のタプルのリスト,coxa(付け根),femur,tibia,脚先の順 x[mm],z[mm]\n
             脚の関節の角度のリスト,coxa(今回は0で固定),femur,tibiaの順 [rad]\n
         """
-        joint_pos = [[], []]
+        joint_pos: List[List[float]] = [[], []]
         angle: List[float] = []
 
         # 脚の付け根．
-        joint_pos[0].append(0)
-        joint_pos[1].append(0)
+        joint_pos[0].append(0.0)
+        joint_pos[1].append(0.0)
 
         # 第1関節．
         joint_pos[0].append(self._param.coxa_length)
-        joint_pos[1].append(0)
-        angle.append(0)
+        joint_pos[1].append(0.0)
+        angle.append(0.0)
 
         # 長さが足りない場合は計算できない．
         triangle_checker = TriangleChecker()
@@ -272,7 +272,7 @@ class HexapodLegRangeCalculator:
 
     def calc_inverse_kinematics_xz_arduino(
         self, x: float, z: float
-    ) -> Tuple[List[float], List[float], List[float], List[float]]:
+    ) -> Tuple[List[float], List[int], List[int], List[int]]:
         """
         coxa jointが回転していない場合の逆運動学を計算する．
         脚が水平に伸びる方向にx,上方向にzをとる．
@@ -287,7 +287,7 @@ class HexapodLegRangeCalculator:
 
         Returns
         -------
-        res : Tuple[List[float], List[float], List[float], List[float]]
+        res : Tuple[List[float], List[int], List[int], List[int]]
             3つの関節の角度のリスト,coxa,femur,tibiaの順 [rad]\n
             3つの関節のサーボ角のリスト,coxa,femur,tibiaの順 [0~1023],実際にはサーボが傾いてついているのでこの値をそのまま使用しない\n
             3つの関節の左足サーボ角のリスト,coxa,femur,tibiaの順 [0~1023]\n
@@ -309,7 +309,7 @@ class HexapodLegRangeCalculator:
         d2 = 2 * self._param.femur_length * im
         try:
             q2 = math.acos(d1 / d2)
-        except:
+        except ValueError:
             q2 = 0.0
         angle.append(q1 + q2)
 
@@ -322,7 +322,7 @@ class HexapodLegRangeCalculator:
         d2 = 2 * self._param.tibia_length * self._param.femur_length
         try:
             angle.append(math.acos(d1 / d2) - math.pi / 2)
-        except:
+        except ValueError:
             angle.append(0.0)
 
         servo_angle = []
