@@ -49,19 +49,19 @@ class HexapodLegRenderer:
             [0, 0, 0, 0],
         ]  # クリックされたときに表示するグラフ用．
 
-        if self._calc == None:
+        if self._calc is None:
             raise ValueError("calc_instance is None")
 
-        if self._param == None:
+        if self._param is None:
             raise ValueError("param_instance is None")
 
-        if self._fig == None:
+        if self._fig is None:
             raise ValueError("fig is None")
 
-        if self._ax == None:
+        if self._ax is None:
             raise ValueError("ax is None")
 
-        if self._ax_table == None:
+        if self._ax_table is None:
             raise ValueError("ax_table is None")
 
         self._alreadly_init = False  # 初期化フラグ．
