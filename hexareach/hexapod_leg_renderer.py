@@ -41,12 +41,12 @@ class HexapodLegRenderer:
         self.set_circle(display_circle)
         self.set_wedge(display_wedge)
 
-        self._WEDGE_R = 20  # 扇形の半径．
+        self._WEDGE_R = 20.0  # 扇形の半径．
 
         self._joint_pos = [[0, 0, 0, 0], [0, 0, 0, 0]]  # 脚の関節の位置．
         self._joint_pos_click = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
+            [0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0],
         ]  # クリックされたときに表示するグラフ用．
 
         if self._calc is None:
@@ -69,6 +69,14 @@ class HexapodLegRenderer:
             False  # 反転フラグ，逆運動学解の解が2つあるため，どちらを選ぶかを決める．
         )
 
+        # 脚の可動範囲を表示するための円を登録．
+        self._femur_circle = plt.Circle((0.0, 0.0), color="black", fill=False)
+        self._tibia_circle = plt.Circle((0.0, 0.0), color="black", fill=False)
+
+        # 角度用の扇形を登録．
+        self._femur_wedge = patch.Wedge((0.0, 0.0), self._WEDGE_R, 0, 10)
+        self._tibia_wedge = patch.Wedge((0.0, 0.0), self._WEDGE_R, 0, 10)
+
     def render(self) -> None:
         """イベントを設定する,初期化処理.2度目以降の呼び出しは無視される．"""
 
@@ -87,10 +95,6 @@ class HexapodLegRenderer:
             print("HexapodLegRenderer.set_event: Already initialized.")
             return
 
-        # 脚の可動範囲を表示するための円を登録．
-        self._femur_circle = plt.Circle([0, 0], color="black", fill=False)
-        self._tibia_circle = plt.Circle([0, 0], color="black", fill=False)
-
         self._femur_circle.set_radius(self._param.femur_length)
         self._tibia_circle.set_radius(self._param.tibia_length)
 
@@ -102,10 +106,6 @@ class HexapodLegRenderer:
 
         self._ax.add_artist(self._femur_circle)
         self._ax.add_artist(self._tibia_circle)
-
-        # 角度用の扇形を登録．
-        self._femur_wedge = patch.Wedge([0, 0], self._WEDGE_R, 0, 10)
-        self._tibia_wedge = patch.Wedge([0, 0], self._WEDGE_R, 0, 10)
 
         self._femur_wedge.set_visible(self._display_wedge)
         self._tibia_wedge.set_visible(self._display_wedge)
@@ -172,7 +172,7 @@ class HexapodLegRenderer:
         mouse_x = event.xdata
         mouse_z = event.ydata
 
-        if mouse_x == None or mouse_z == None:
+        if mouse_x is None or mouse_z is None:
             # マウスポイント地点が取得できなかった場合は何もしない．
             return
 
