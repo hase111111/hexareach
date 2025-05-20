@@ -43,7 +43,8 @@ class HexapodLegRenderer:
 
         self._WEDGE_R = 20.0  # 扇形の半径．
 
-        self._joint_pos = [[0, 0, 0, 0], [0, 0, 0, 0]]  # 脚の関節の位置．
+        # 脚の関節の位置．
+        self._joint_pos = [[0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0]]
         self._joint_pos_click = [
             [0.0, 0.0, 0.0, 0.0],
             [0.0, 0.0, 0.0, 0.0],
@@ -142,18 +143,18 @@ class HexapodLegRenderer:
         self._angle_table = self._ax_table.table(
             cellText=[
                 ["Joint", "Angle [deg]"],
-                ["coxa", 0],
-                ["femur", 0],
-                ["tibia", 0],
-                ["coxa servo", 0],
-                ["femur servo", 0],
-                ["tibia servo", 0],
-                ["left coxa servo", 0],
-                ["left femur servo", 0],
-                ["left tibia servo", 0],
-                ["right coxa servo", 0],
-                ["right femur servo", 0],
-                ["right tibia servo", 0],
+                ["coxa", ""],
+                ["femur", ""],
+                ["tibia", ""],
+                ["coxa servo", ""],
+                ["femur servo", ""],
+                ["tibia servo", ""],
+                ["left coxa servo", ""],
+                ["left femur servo", ""],
+                ["left tibia servo", ""],
+                ["right coxa servo", ""],
+                ["right femur servo", ""],
+                ["right tibia servo", ""],
             ],
             loc="center",
         )
@@ -188,11 +189,11 @@ class HexapodLegRenderer:
         self._tibia_circle.center = [self._joint_pos[0][2], self._joint_pos[1][2]]
 
         # 扇形を描画．
-        self._femur_wedge.set_center([self._joint_pos[0][1], self._joint_pos[1][1]])
+        self._femur_wedge.set_center((self._joint_pos[0][1], self._joint_pos[1][1]))
         self._femur_wedge.set_theta1(min([0, math.degrees(angle[1])]))
         self._femur_wedge.set_theta2(max([0, math.degrees(angle[1])]))
 
-        self._tibia_wedge.set_center([self._joint_pos[0][2], self._joint_pos[1][2]])
+        self._tibia_wedge.set_center((self._joint_pos[0][2], self._joint_pos[1][2]))
         self._tibia_wedge.set_theta1(
             min([math.degrees(angle[1]), math.degrees(angle[1] + angle[2])])
         )
