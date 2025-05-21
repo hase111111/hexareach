@@ -8,7 +8,11 @@ __init__.py
 
 
 from .mouse_grid_renderer import MouseGridRenderer
+from .color_param import ColorParam
+from .approximated_graph_renderer import ApproximatedGraphRenderer
 
 __all__ = [
+    "ColorParam",
     "MouseGridRenderer",
+    "ApproximatedGraphRenderer",
 ]

@@ -6,11 +6,10 @@ approximated_graph_renderer.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-# モジュールのインポート
 import matplotlib.axes as axes
 import numpy as np
 
-from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 
 
 class ApproximatedGraphRenderer:
@@ -30,10 +29,10 @@ class ApproximatedGraphRenderer:
         self._ax = ax
         self._GRAPH_STEP = 0.01
 
-        if self._calc == None:
+        if self._calc is None:
             raise ValueError("calc_instance is None")
 
-        if self._ax == None:
+        if self._ax is None:
             raise ValueError("ax is None")
 
         self.set_draw_additional_line(draw_additional_line)

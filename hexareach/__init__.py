@@ -9,7 +9,6 @@ __init__.py
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .hexapod_leg_renderer import HexapodLegRenderer
-from .approximated_graph_renderer import ApproximatedGraphRenderer
 from .hexapod_range_of_motion import HexapodRangeOfMotion
 from .hexapod_leg_power import HexapodLegPower
 from .graph_dispalyer import GraphDisplayer
@@ -19,7 +18,6 @@ from .hexapod_param import HexapodParam
 # The package version is specified in setup.py
 
 __all__ = [
-    "ApproximatedGraphRenderer",
     "GraphDisplayer",
     "HexapodLegPower",
     "HexapodLegRangeCalculator",
