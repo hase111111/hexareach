@@ -9,6 +9,7 @@ approximated_graph_renderer.py
 import matplotlib.axes as axes
 import numpy as np
 
+from .color_param import ColorParam
 from ..hexapod_param import HexapodParamProtocol
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 
@@ -19,27 +20,20 @@ class ApproximatedGraphRenderer:
         self,
         hexapod_param: HexapodParamProtocol,
         ax: axes.Axes,
+        color_param: ColorParam = ColorParam(),
         z_min: float = -300,
         z_max: float = 300,
         draw_additional_line: bool = True,
-        draw_fill: bool = True,
-        color: str = "green",
-        alpha: float = 1.0,
     ) -> None:
         self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._ax = ax
-        self._GRAPH_STEP = 0.01
-
-        if self._calc is None:
-            raise ValueError("calc_instance is None")
+        self._color_param = color_param
 
         if self._ax is None:
             raise ValueError("ax is None")
 
+        self._graph_step = 0.01
         self.set_draw_additional_line(draw_additional_line)
-        self.set_draw_fill(draw_fill)
-        self.set_color(color)
-        self.set_alpha(alpha)
         self.set_range(z_min, z_max)
 
     def render(self) -> None:
@@ -49,34 +43,14 @@ class ApproximatedGraphRenderer:
         """
 
         print(f"{__name__}: Shows approximate leg range of motion")
-        print(
-            "ApproximatedGraphRenderer.render: "
-            + "z_min = "
-            + str(self._z_min)
-            + "[mm], "
-            + "z_max = "
-            + str(self._z_max)
-            + "[mm], "
-            + "draw_additional_line = "
-            + str(self._draw_additional_line)
-            + ", "
-            + "color = "
-            + self._color
-            + ", "
-            + "alpha = "
-            + str(self._alpha)
-            + ", "
-            + "draw_fill = "
-            + str(self._draw_fill)
-            + ", "
-            + "(step = "
-            + str(self._GRAPH_STEP)
-            + ")"
-        )
+
+        color = self._color_param.approximated_graph_color
+        alpha = self._color_param.approximated_graph_alpha
+        draw_fill = self._color_param.approximated_graph_filled
 
         # 近似された(Approximated)脚可動範囲の計算を行う．
         # GRAPH_STEP刻みでZ_MINからZ_MAXまでの配列zを作成．
-        z = np.arange(self._z_min, self._z_max, self._GRAPH_STEP)
+        z = np.arange(self._z_min, self._z_max, self._graph_step)
 
         # xと同じ要素数で値がすべて min_leg_radius の配列zを作成．
         approximated_x_min = np.full_like(
@@ -89,22 +63,22 @@ class ApproximatedGraphRenderer:
 
         if self._draw_additional_line:
             # 補助線を描画する．
-            self._ax.plot(approximated_x_min, z, color=self._color, alpha=0.1)
-            self._ax.plot(approximated_x_max, z, color=self._color, alpha=0.1)
+            self._ax.plot(approximated_x_min, z, color=color, alpha=0.1)
+            self._ax.plot(approximated_x_max, z, color=color, alpha=0.1)
 
         # xとzで囲まれた範囲をfillする．
-        if self._draw_fill:
+        if draw_fill:
             self._ax.fill_betweenx(
                 z,
                 approximated_x_min,
                 approximated_x_max,
                 where=approximated_x_max >= approximated_x_min,
-                color=self._color,
-                alpha=self._alpha,
+                color=color,
+                alpha=alpha,
             )
         else:
-            self._ax.plot(approximated_x_min, z, color=self._color, alpha=self._alpha)
-            self._ax.plot(approximated_x_max, z, color=self._color, alpha=self._alpha)
+            self._ax.plot(approximated_x_min, z, color=color, alpha=alpha)
+            self._ax.plot(approximated_x_max, z, color=color, alpha=alpha)
 
     def set_range(self, z_min: float, z_max: float) -> None:
         """
@@ -137,42 +111,3 @@ class ApproximatedGraphRenderer:
             補助線を描画するか．
         """
         self._draw_additional_line = draw_additional_line
-
-    def set_draw_fill(self, draw_fill: bool) -> None:
-        """
-        fillするかどうかを設定する．
-
-        Parameters
-        ----------
-        draw_fill : bool
-            fillするか．
-        """
-        self._draw_fill = draw_fill
-
-    def set_color(self, color: str) -> None:
-        """
-        色を設定する．
-
-        Parameters
-        ----------
-        color : str
-            色．
-        """
-        self._color = color
-
-    def set_alpha(self, alpha: float) -> None:
-        """
-        透明度を設定する．
-
-        Parameters
-        ----------
-        alpha : float
-            透明度．
-        """
-        self._alpha = alpha
-
-        # 値が異常な場合は例外を投げる．
-        if self._alpha < 0.0 or self._alpha > 1.0:
-            raise ValueError(
-                "ApproximatedGraphRenderer.set_alpha: alpha is out of range"
-            )

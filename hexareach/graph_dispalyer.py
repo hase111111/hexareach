@@ -158,9 +158,6 @@ class GraphDisplayer:
             z_min=Z_MIN,
             z_max=Z_MAX,
             draw_additional_line=True,
-            draw_fill=approx_fill,
-            color=color_approx,
-            alpha=alpha_approx,
         )
 
         if display_approximated_graph:
