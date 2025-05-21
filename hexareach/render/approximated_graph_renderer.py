@@ -23,7 +23,6 @@ class ApproximatedGraphRenderer:
         color_param: ColorParam = ColorParam(),
         z_min: float = -300,
         z_max: float = 300,
-        draw_additional_line: bool = True,
     ) -> None:
         self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._ax = ax
@@ -33,7 +32,6 @@ class ApproximatedGraphRenderer:
             raise ValueError("ax is None")
 
         self._graph_step = 0.01
-        self.set_draw_additional_line(draw_additional_line)
         self.set_range(z_min, z_max)
 
     def render(self) -> None:
@@ -57,14 +55,14 @@ class ApproximatedGraphRenderer:
             z, self._calc.get_approximate_min_leg_raudus()
         )
 
-        approximated_x_max = []
-        for i in range(len(z)):
-            approximated_x_max.append(self._calc.get_approximate_max_leg_raudus(z[i]))
+        # np の空の配列を作成．
+        approximated_x_max = np.empty([0])
 
-        if self._draw_additional_line:
-            # 補助線を描画する．
-            self._ax.plot(approximated_x_min, z, color=color, alpha=0.1)
-            self._ax.plot(approximated_x_max, z, color=color, alpha=0.1)
+        for _, z_value in enumerate(z):
+            approximated_x_max = np.append(
+                approximated_x_max,
+                self._calc.get_approximate_max_leg_raudus(z_value),
+            )
 
         # xとzで囲まれた範囲をfillする．
         if draw_fill:
@@ -100,14 +98,3 @@ class ApproximatedGraphRenderer:
             raise ValueError(
                 "ApproximatedGraphRenderer.set_range: z_min is greater than z_max"
             )
-
-    def set_draw_additional_line(self, draw_additional_line: bool) -> None:
-        """
-        補助線を描画するかどうかを設定する．
-
-        Parameters
-        ----------
-        draw_additional_line : bool
-            補助線を描画するか．
-        """
-        self._draw_additional_line = draw_additional_line

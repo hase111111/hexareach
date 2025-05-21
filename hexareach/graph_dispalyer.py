@@ -157,7 +157,6 @@ class GraphDisplayer:
             self._ax,
             z_min=Z_MIN,
             z_max=Z_MAX,
-            draw_additional_line=True,
         )
 
         if display_approximated_graph:
