@@ -153,7 +153,7 @@ class GraphDisplayer:
 
         # 脚の可動範囲の近似値を描画.
         app_graph = ApproximatedGraphRenderer(
-            hexapod_calc,
+            hexapod_pram,
             self._ax,
             z_min=Z_MIN,
             z_max=Z_MAX,

@@ -9,6 +9,7 @@ approximated_graph_renderer.py
 import matplotlib.axes as axes
 import numpy as np
 
+from ..hexapod_param import HexapodParamProtocol
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 
 
@@ -16,7 +17,7 @@ class ApproximatedGraphRenderer:
 
     def __init__(
         self,
-        hexapod_leg_range_calc: HexapodLegRangeCalculator,
+        hexapod_param: HexapodParamProtocol,
         ax: axes.Axes,
         z_min: float = -300,
         z_max: float = 300,
@@ -25,7 +26,7 @@ class ApproximatedGraphRenderer:
         color: str = "green",
         alpha: float = 1.0,
     ) -> None:
-        self._calc = hexapod_leg_range_calc
+        self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._ax = ax
         self._GRAPH_STEP = 0.01
 
@@ -47,7 +48,7 @@ class ApproximatedGraphRenderer:
         セット関数はこの関数の前に呼び出す必要がある．
         """
 
-        print("ApproximatedGraphRenderer.render: Shows approximate leg range of motion")
+        print(f"{__name__}: Shows approximate leg range of motion")
         print(
             "ApproximatedGraphRenderer.render: "
             + "z_min = "

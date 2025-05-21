@@ -7,6 +7,9 @@ color_param.py
 # https://opensource.org/licenses/mit-license.php
 
 class ColorParam:
-    """Class that stores color parameters."""
+    """Struct that stores color parameters."""
 
     mouse_grid_color: str = "black"
+    mouse_grid_alpha: float = 1.0
+    approximated_graph_color: str = "green"
+    approximated_graph_alpha: float = 1.0
