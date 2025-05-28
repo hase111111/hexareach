@@ -28,10 +28,6 @@ class HexapodLegRangeCalculator:
 
         # Calculate the maximum radius of the leg.
         self._init_approximate_max_leg_raudus()
-
-        if self._param is None:
-            raise ValueError("param_instance is None")
-
         self._min_radius = self._param.approx_min_radius
 
         if self._min_radius < 0:
@@ -296,7 +292,7 @@ class HexapodLegRangeCalculator:
             3つの関節の左足サーボ角のリスト,coxa,femur,tibiaの順 [0~1023]\n
             3つの関節の右足サーボ角のリスト,coxa,femur,tibiaの順 [0~1023]\n
         """
-        angle = []
+        angle: List[float] = []
         angle.append(0.0)  # 第1関節の角度は0度．
 
         true_x = x - self._param.coxa_length
@@ -378,7 +374,7 @@ class HexapodLegRangeCalculator:
         """
 
         # 近似された脚の可動範囲の最大半径のリスト，z軸の座標軸の取り方が逆なので，zを反転させる．
-        self._approximate_max_leg_raudus = []
+        self._approximate_max_leg_raudus: List[float] = []
 
         z_min = 0
         z_max = int(self._param.femur_length + self._param.tibia_length)

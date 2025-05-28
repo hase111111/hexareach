@@ -27,10 +27,6 @@ class ApproximatedGraphRenderer:
         self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._ax = ax
         self._color_param = color_param
-
-        if self._ax is None:
-            raise ValueError("ax is None")
-
         self._graph_step = 0.01
         self.set_range(z_min, z_max)
 
