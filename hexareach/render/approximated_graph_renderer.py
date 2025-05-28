@@ -85,9 +85,9 @@ class ApproximatedGraphRenderer:
         Parameters
         ----------
         z_min : float
-            zの最小値．
+            zの最小値.
         z_max : float
-            zの最大値．
+            zの最大値.
         """
 
         self._z_min = z_min

@@ -52,6 +52,13 @@ pyton3 -m phantom_cross  # Python3の場合
 # This is a package for hexapod robot.
 ```
 
+tkinterがない，というエラーが出た場合は，以下のコマンドでtkinterをインストールしてください．
+
+```bash
+sudo pip3 install pytk
+sudo apt-get install python3-tk
+```
+
 ### GraphDisplayerクラス
 
 脚の図示はGraphDisplayerクラスを用いて行います．
