@@ -11,10 +11,18 @@ from hexareach.math.triangle_checker import TriangleChecker
 
 
 class TestTriangleChecker(unittest.TestCase):
+    """
+    Test cases for the TriangleChecker class.
+    """
+
     def setUp(self):
         self.triangle_checker = TriangleChecker()
 
     def test_can_make_triangle(self):
+        """
+        Test if the triangle can be formed with given lengths.
+        """
+
         self.assertTrue(self.triangle_checker.check(3, 4, 5))
         self.assertTrue(self.triangle_checker.check(3, 5, 4))
         self.assertTrue(self.triangle_checker.check(4, 3, 5))

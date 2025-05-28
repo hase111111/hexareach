@@ -13,7 +13,7 @@ class TriangleChecker:
     """
     A class that determines the validity of triangles.
     """
-    
+
     def __init__(self) -> None:
         pass
 
