@@ -23,7 +23,7 @@ class HexapodLegRangeCalculator:
         hexapod_param : HexapodParamProtocol
             パラメータを格納するためのインスタンス．
         """
-        self._DEBUG_FLAG = False
+        self._debug_flag = False
         self._param = hexapod_param
 
         # Calculate the maximum radius of the leg.
@@ -35,21 +35,19 @@ class HexapodLegRangeCalculator:
 
     def set_approximate_min_leg_raudus(self, r: float) -> None:
         """
-        脚の最小半径を設定する．
+        Sets the minimum radius of the legs.
 
         Parameters
         ----------
         r : float
-            脚の最小半径 [mm]
+            Minimum radius of legs [mm].
         """
 
         self._min_radius = r
 
-        # 異常な値の場合は例外を投げる．
+        # Check if the minimum radius is valid.
         if self._min_radius < 0:
             raise ValueError("r must be greater than 0")
-
-        return
 
     def get_approximate_min_leg_raudus(self) -> float:
         """
@@ -414,8 +412,8 @@ class HexapodLegRangeCalculator:
                 q2_theta = q2_upper / q2_lower
 
                 if (q2_theta < -1.0) or (q2_theta > 1.0):
-                    if self._DEBUG_FLAG:
-                        print(f"[error] : {q2_theta =}, {x =}, {z =}")
+                    if self._debug_flag:
+                        print(f"[error] :{__name__}, {q2_theta =}, {x =}, {z =}")
                     continue
 
                 # q2 = math.acos(q2_theta)

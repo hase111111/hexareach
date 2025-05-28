@@ -6,7 +6,7 @@ approximated_graph_renderer.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
-import matplotlib.axes as axes
+from matplotlib import axes
 import numpy as np
 
 from .color_param import ColorParam
