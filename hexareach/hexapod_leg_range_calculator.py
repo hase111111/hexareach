@@ -324,17 +324,17 @@ class HexapodLegRangeCalculator:
         except ValueError:
             angle.append(0.0)
 
-        servo_angle = []
+        servo_angle: List[int] = []
         servo_angle.append((int)(angle[0] * 100.0 / 51.0 * 100.0))
         servo_angle.append((int)(angle[1] * 100.0 / 51.0 * 100.0))
         servo_angle.append((int)(angle[2] * 100.0 / 51.0 * 100.0))
 
-        left_servo_angle = []
+        left_servo_angle: List[int] = []
         left_servo_angle.append(512 - servo_angle[0])
         left_servo_angle.append(500 - servo_angle[1])
         left_servo_angle.append(670 - servo_angle[2])
 
-        right_servo_angle = []
+        right_servo_angle: List[int] = []
         right_servo_angle.append(512 + servo_angle[0])
         right_servo_angle.append(524 + servo_angle[1])
         right_servo_angle.append(354 + servo_angle[2])
