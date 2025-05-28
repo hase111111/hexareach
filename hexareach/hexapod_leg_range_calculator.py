@@ -25,7 +25,9 @@ class HexapodLegRangeCalculator:
         """
         self._DEBUG_FLAG = False
         self._param = hexapod_param
-        self._init_approximate_max_leg_raudus()  # 脚の最大半径を計算する．
+
+        # Calculate the maximum radius of the leg.
+        self._init_approximate_max_leg_raudus()
 
         if self._param is None:
             raise ValueError("param_instance is None")
@@ -80,24 +82,25 @@ class HexapodLegRangeCalculator:
             脚がx方向に脚を伸ばせる最大半径 [mm]
         """
 
-        # zが範囲外の場合は0を返す
+        # Returns 0 if z is out of range.
         if -z < 0 or len(self._approximate_max_leg_raudus) < -z:
             return self._min_radius
 
-        # Z軸の座標軸の取り方が逆なので、zを反転させる
+        # Reverse the z-axis coordinate axis,
+        # because the way it is taken is the other way around.
         r = self._approximate_max_leg_raudus[(int)(-z)]
 
         if self._min_radius < r:
             return r
-        else:
-            return self._min_radius
+        
+        return self._min_radius
 
     def get_leg_position_xz(
         self, theta2: float, theta3: float
     ) -> Tuple[bool, float, float]:
         """
-        第1関節の角度を無視して、第2関節と第3関節の角度から脚先の位置を計算する．\n
-        出力は計算できたかを表すboolean,x,z平面における座標のタプル．
+        第1関節の角度を無視して、第2関節と第3関節の角度から脚先の位置を計算する.\n
+        出力は計算できたかを表すboolean,x,z平面における座標のタプル.
 
         Parameters
         ----------
@@ -109,8 +112,8 @@ class HexapodLegRangeCalculator:
         Returns
         -------
         res : Tuple[bool, float, float]
-            間接の可動範囲外の場合はfalseを返す．\n
-            脚先の位置のタプル,x[mm],z[mm]．
+            間接の可動範囲外の場合はfalseを返す.\n
+            脚先の位置のタプル,x[mm],z[mm].
         """
 
         # 間接の可動範囲外の場合はFalseを返す
@@ -274,8 +277,8 @@ class HexapodLegRangeCalculator:
         self, x: float, z: float
     ) -> Tuple[List[float], List[int], List[int], List[int]]:
         """
-        coxa jointが回転していない場合の逆運動学を計算する．
-        脚が水平に伸びる方向にx,上方向にzをとる．
+        coxa jointが回転していない場合の逆運動学を計算する.
+        脚が水平に伸びる方向にx,上方向にzをとる.
         Arduinoのプログラムの移植,どのように離散化を行うかの可視化のため．
 
         Parameters
@@ -405,7 +408,7 @@ class HexapodLegRangeCalculator:
                 if im == 0:
                     im += 0.0000001
 
-                q1 = -math.atan2(line_end_z, ik_true_x)
+                # q1 = -math.atan2(line_end_z, ik_true_x)
                 q2_upper = (
                     math.pow(self._param.femur_length, 2.0)
                     + math.pow(im, 2.0)
@@ -416,16 +419,10 @@ class HexapodLegRangeCalculator:
 
                 if (q2_theta < -1.0) or (q2_theta > 1.0):
                     if self._DEBUG_FLAG:
-                        print(
-                            "[error] : q2_theta:"
-                            + str(q2_theta)
-                            + " x:"
-                            + str(x)
-                            + " z:"
-                            + str(z)
-                        )
+                        print(f"[error] : {q2_theta =}, {x =}, {z =}")
                     continue
-                q2 = math.acos(q2_theta)
+
+                # q2 = math.acos(q2_theta)
 
                 r_margin = 1.0
                 self._approximate_max_leg_raudus[z] = (float)(x) - r_margin
@@ -446,8 +443,9 @@ class HexapodLegRangeCalculator:
         res : float
             角度 [rad]
         """
-        if angle > math.pi:
-            angle -= math.pi * 2.0
-        elif angle < -math.pi:
-            angle += math.pi * 2.0
+        while angle > math.pi or angle < -math.pi:
+            if angle > math.pi:
+                angle -= math.pi * 2.0
+            elif angle < -math.pi:
+                angle += math.pi * 2.0
         return angle
