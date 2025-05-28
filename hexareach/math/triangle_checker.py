@@ -11,8 +11,9 @@ import numpy as np
 
 class TriangleChecker:
     """
-    三角形の成立を判定するクラス．
+    A class that determines the validity of triangles.
     """
+    
     def __init__(self) -> None:
         pass
 

@@ -1,0 +1,4 @@
+{
+    // Pylance settings
+    "python.analysis.typeCheckingMode": "strict",
+}
