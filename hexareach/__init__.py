@@ -8,7 +8,6 @@ __init__.py
 
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .hexapod_leg_renderer import HexapodLegRenderer
 from .hexapod_range_of_motion import HexapodRangeOfMotion
 from .hexapod_leg_power import HexapodLegPower
 from .graph_dispalyer import GraphDisplayer
@@ -21,7 +20,6 @@ __all__ = [
     "GraphDisplayer",
     "HexapodLegPower",
     "HexapodLegRangeCalculator",
-    "HexapodLegRenderer",
     "HexapodParam",
     "HexapodRangeOfMotion",
 ]

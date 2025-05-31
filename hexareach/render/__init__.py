@@ -10,9 +10,11 @@ __init__.py
 from .mouse_grid_renderer import MouseGridRenderer
 from .color_param import ColorParam
 from .approximated_graph_renderer import ApproximatedGraphRenderer
+from .hexapod_leg_renderer import HexapodLegRenderer
 
 __all__ = [
     "ColorParam",
     "MouseGridRenderer",
     "ApproximatedGraphRenderer",
+    "HexapodLegRenderer",
 ]

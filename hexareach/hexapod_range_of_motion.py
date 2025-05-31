@@ -54,21 +54,13 @@ class HexapodRangeOfMotion:
 
         self._step = 0.001
 
-        # 例外を投げる
-        if self._calc is None:
-            raise ValueError("hexapod_leg_range_calc is None")
-
-        if self._param is None:
-            raise ValueError("hexapod_param is None")
-
-        if self._ax is None:
-            raise ValueError("ax is None")
-
     def render(self) -> None:
         """脚の可動範囲を描画する．"""
 
         print(f"{__name__}: Draw the range of motion of the legs")
-        print(f"{__name__}: {self._color= }, {self._upper_alpha= }, {self._lowwer_alpha= }")
+        print(f"{__name__}: {self._color = }")
+        print(f"{__name__}: {self._upper_alpha = }")
+        print(f"{__name__}: {self._lowwer_alpha = }")
 
         self.render_upper_leg_range()
         self.render_lower_leg_range()

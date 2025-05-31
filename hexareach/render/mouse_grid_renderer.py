@@ -45,8 +45,8 @@ class MouseGridRenderer:
         """
 
         print(f"{__name__}: Starts drawing the mouse grid")
-        print(f"{__name__}: {self._color_param.mouse_grid_color=}")
-        print(f"{__name__}: {self._color_param.mouse_grid_alpha=}")
+        print(f"{__name__}: {self._color_param.mouse_grid_color = }")
+        print(f"{__name__}: {self._color_param.mouse_grid_alpha = }")
 
         if self._alreadly_init:
             print(f"{__name__}: Already initialized.")

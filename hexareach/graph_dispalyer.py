@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from .hexapod_leg_power import HexapodLegPower
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
-from .hexapod_leg_renderer import HexapodLegRenderer
+from .render.hexapod_leg_renderer import HexapodLegRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer
 from .hexapod_range_of_motion import HexapodRangeOfMotion
 from .hexapod_param import HexapodParam
@@ -28,29 +28,22 @@ class GraphDisplayer:
         self,
         hexapod_pram=HexapodParam(),
         *,
-        display_table=True,
-        display_leg_power=False,
-        display_approximated_graph=True,
-        display_mouse_grid=True,
-        display_ground_line=True,
-        display_circle=True,
-        display_wedge=True,
-        x_min=-100.0,
-        x_max=300.0,
-        z_min=-200.0,
-        z_max=200.0,
-        leg_power_step=2.0,
-        approx_fill=True,
-        color_approx="green",
-        alpha_approx=0.5,
-        color_rom="black",
-        alpha_upper_rom=0.3,
-        alpha_lower_rom=1.0,
-        color_mouse_grid="black",
-        alpha_mouse_grid=0.5,
-        image_file_name="result/img_main.png",
-        ground_z=-25.0,
-        do_not_show=False
+        display_table: bool=True,
+        display_leg_power: bool=False,
+        display_approximated_graph: bool=True,
+        display_mouse_grid: bool=True,
+        display_ground_line: bool=True,
+        x_min: float =-100.0,
+        x_max: float =300.0,
+        z_min: float =-200.0,
+        z_max: float =200.0,
+        leg_power_step: float =2.0,
+        color_rom: str ="black",
+        alpha_upper_rom: float =0.3,
+        alpha_lower_rom: float =1.0,
+        image_file_name: str="result/img_main.png",
+        ground_z: float =-25.0,
+        do_not_show: bool =False
     ) -> Tuple[plt.Figure, axes.Axes, axes.Axes]:
         """
         x_min < x < x_max , z_min < z < z_max の範囲でグラフを描画する．\n
@@ -167,10 +160,7 @@ class GraphDisplayer:
             hexapod_pram,
             self._fig,
             self._ax,
-            self._ax_table,
-            display_circle=display_circle,
-            display_wedge=display_wedge,
-        )
+            self._ax_table)
         self.leg_renderer.set_img_file_name(image_file_name)
         self.leg_renderer.render()
 

@@ -14,3 +14,5 @@ class ColorParam:
     approximated_graph_color: str = "green"
     approximated_graph_alpha: float = 0.5
     approximated_graph_filled: bool = True
+    leg_circle_displayed: bool = True
+    leg_wedge_displayed: bool = True
