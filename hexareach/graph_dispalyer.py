@@ -155,8 +155,7 @@ class GraphDisplayer:
         app_graph = ApproximatedGraphRenderer(
             hexapod_pram,
             self._ax,
-            z_min=Z_MIN,
-            z_max=Z_MAX,
+            z_min_max=(Z_MIN, Z_MAX)
         )
 
         if display_approximated_graph:
@@ -176,9 +175,7 @@ class GraphDisplayer:
         self.leg_renderer.render()
 
         # マウスがグラフのどこをポイントしているかを示す線を描画する.
-        self.mouse_grid_renderer = MouseGridRenderer(
-            self._fig, self._ax, alpha=alpha_mouse_grid, color=color_mouse_grid
-        )
+        self.mouse_grid_renderer = MouseGridRenderer(self._fig, self._ax)
         if display_mouse_grid:
             self.mouse_grid_renderer.render()
 

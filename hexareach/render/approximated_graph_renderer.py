@@ -6,34 +6,44 @@ approximated_graph_renderer.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
+from typing import Tuple
+
 from matplotlib import axes
 import numpy as np
 
 from .color_param import ColorParam
-from ..hexapod_param import HexapodParamProtocol
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from ..hexapod_param import HexapodParamProtocol
 
 
 class ApproximatedGraphRenderer:
+    """
+    A class that renders the approximated leg range of motion graph.
+    This class uses the HexapodLegRangeCalculator to calculate the
+    approximated leg range of motion and renders it on the given axes.
+    """
 
     def __init__(
         self,
         hexapod_param: HexapodParamProtocol,
         ax: axes.Axes,
+        *,
         color_param: ColorParam = ColorParam(),
-        z_min: float = -300,
-        z_max: float = 300,
+        z_min_max: Tuple[float, float] = (-300.0, 300.0)
     ) -> None:
         self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._ax = ax
         self._color_param = color_param
         self._graph_step = 0.01
-        self.set_range(z_min, z_max)
+        self.set_range(
+            z_min=z_min_max[0],
+            z_max=z_min_max[1]
+        )
 
     def render(self) -> None:
         """
-        近似された(Approximated)脚可動範囲の表示を行う．
-        セット関数はこの関数の前に呼び出す必要がある．
+        Display the Approximated leg range of motion.
+        The set function must be called before this function.
         """
 
         print(f"{__name__}: Shows approximate leg range of motion")
@@ -42,16 +52,17 @@ class ApproximatedGraphRenderer:
         alpha = self._color_param.approximated_graph_alpha
         draw_fill = self._color_param.approximated_graph_filled
 
-        # 近似された(Approximated)脚可動範囲の計算を行う．
-        # GRAPH_STEP刻みでZ_MINからZ_MAXまでの配列zを作成．
+        # Calculate the range of motion of the approximated leg.
+        # Create an array z from z_min to z_max in graph_step ticks.
         z = np.arange(self._z_min, self._z_max, self._graph_step)
 
-        # xと同じ要素数で値がすべて min_leg_radius の配列zを作成．
+        # Create an array z with the same number of
+        # elements as x and all min_leg_radius values.
         approximated_x_min = np.full_like(
             z, self._calc.get_approximate_min_leg_raudus()
         )
 
-        # np の空の配列を作成．
+        # Create an empty np array.
         approximated_x_max = np.empty([0])
 
         for _, z_value in enumerate(z):
@@ -60,37 +71,42 @@ class ApproximatedGraphRenderer:
                 self._calc.get_approximate_max_leg_raudus(z_value),
             )
 
-        # xとzで囲まれた範囲をfillする．
+        # Fill the area enclosed by x and z.
         if draw_fill:
-            self._ax.fill_betweenx(
+            self._ax.fill_betweenx(  # type: ignore
                 z,
                 approximated_x_min,
                 approximated_x_max,
-                where=approximated_x_max >= approximated_x_min,
+                where=(approximated_x_max >= approximated_x_min).tolist(),
                 color=color,
                 alpha=alpha,
             )
         else:
-            self._ax.plot(approximated_x_min, z, color=color, alpha=alpha)
-            self._ax.plot(approximated_x_max, z, color=color, alpha=alpha)
+            self._ax.plot(  # type: ignore
+                approximated_x_min, z, color=color, alpha=alpha)
+            self._ax.plot(  # type: ignore
+                approximated_x_max, z, color=color, alpha=alpha)
 
     def set_range(self, z_min: float, z_max: float) -> None:
         """
-        近似された(Approximated)脚可動範囲の範囲を設定する．
+        Sets the range of the range of motion of the approximated leg.
 
         Parameters
         ----------
         z_min : float
-            zの最小値.
+            z minimum value.
         z_max : float
-            zの最大値.
+            z maximum value.
+
+        Raises
+        ------
+        ValueError
+            If z_min is greater than z_max.
         """
 
         self._z_min = z_min
         self._z_max = z_max
 
-        # z_minとz_maxの大小関係を確認
+        # Check if z_min is less than or equal to z_max
         if self._z_min > self._z_max:
-            raise ValueError(
-                "ApproximatedGraphRenderer.set_range: z_min is greater than z_max"
-            )
+            raise ValueError(f"{__name__}: {z_min=} is greater than {z_max=}")
