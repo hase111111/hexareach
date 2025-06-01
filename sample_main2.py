@@ -17,9 +17,6 @@ if __name__ == "__main__":
         # set display options.
         display_approximated_graph=False,
         display_leg_power=True,
-        display_circle=False,
-        display_table=False,
-        display_wedge=False,
         display_ground_line=False,
         # set step size of force distribution.
         leg_power_step=5.0,

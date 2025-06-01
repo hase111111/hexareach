@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import tqdm
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .hexapod_param import HexapodParam
+from .hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegPower:
@@ -22,7 +22,7 @@ class HexapodLegPower:
     def __init__(
         self,
         hexapod_leg_range_calc: HexapodLegRangeCalculator,
-        hexapod_param: HexapodParam,
+        hexapod_param: HexapodParamProtocol,
         figure: plt.Figure,
         ax: axes.Axes,
         *,
@@ -64,17 +64,6 @@ class HexapodLegPower:
         # 何%ごとに進捗を表示するか. 5%ごとならば，20回に1回表示するため20を指定する．
         self._PRINT_DIV = int(20)
 
-        if self._calc is None:
-            raise ValueError("HexapodLegPower.__init__: calc_instance is None")
-
-        if self._param is None:
-            raise ValueError("HexapodLegPower.__init__: param_instance is None")
-
-        if self._figure is None:
-            raise ValueError("HexapodLegPower.__init__: figure is None")
-
-        if self._ax is None:
-            raise ValueError("HexapodLegPower.__init__: ax is None")
 
     def render(self) -> None:
         """

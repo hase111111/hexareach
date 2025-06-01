@@ -110,16 +110,15 @@ class GraphDisplayer:
         Z_MAX = z_max
 
         if display_table:
-            self._fig = plt.figure()
-            self._ax = self._fig.add_subplot(1, 2, 1)
-            self._ax_table = self._fig.add_subplot(1, 2, 2)
+            fig = plt.figure()  # type: ignore
+            ax = fig.add_subplot(1, 2, 1)  # type: ignore
+            ax_table = fig.add_subplot(1, 2, 2)  # type: ignore
         else:
-            self._fig = plt.figure()
-            self._ax = self._fig.add_subplot(1, 1, 1)
-            self._ax_table = self._fig.add_subplot(
-                3, 3, 2
-            )  # 今回は使用しないので適当な座標に配置.
-            self._ax_table.set_visible(False)  # 表示しない.
+            fig = plt.figure()  # type: ignore
+            ax = fig.add_subplot(1, 1, 1)  # type: ignore
+            # 今回は使用しないので適当な座標に配置.
+            ax_table = fig.add_subplot(3, 3, 2)  # type: ignore
+            ax_table.set_visible(False)  # 表示しない.
 
         # 以下グラフの作成，描画.
         hexapod_calc = HexapodLegRangeCalculator(hexapod_pram)
@@ -128,8 +127,8 @@ class GraphDisplayer:
         hexapod_leg_power = HexapodLegPower(
             hexapod_calc,
             hexapod_pram,
-            self._fig,
-            self._ax,
+            fig,
+            ax,
             x_min=X_MIN,
             x_max=X_MAX,
             z_min=Z_MIN,
@@ -143,7 +142,7 @@ class GraphDisplayer:
         # 脚の可動範囲の近似値を描画.
         app_graph = ApproximatedGraphRenderer(
             hexapod_pram,
-            self._ax,
+            ax,
             z_min_max=(Z_MIN, Z_MAX)
         )
 
@@ -151,38 +150,34 @@ class GraphDisplayer:
             app_graph.render()
 
         # 脚を描画.
-        self.leg_renderer = HexapodLegRenderer(
-            hexapod_pram,
-            self._fig,
-            self._ax,
-            self._ax_table)
-        self.leg_renderer.set_img_file_name(image_file_name)
-        self.leg_renderer.render()
+        leg_renderer = HexapodLegRenderer(hexapod_pram, fig, ax, ax_table)
+        leg_renderer.set_img_file_name(image_file_name)
+        leg_renderer.render()
 
         # マウスがグラフのどこをポイントしているかを示す線を描画する.
-        self.mouse_grid_renderer = MouseGridRenderer(self._fig, self._ax)
+        mouse_grid_renderer = MouseGridRenderer(fig, ax)
         if display_mouse_grid:
-            self.mouse_grid_renderer.render()
+            mouse_grid_renderer.render()
 
         # 脚の可動範囲を描画する.
         hexapod_range_of_motion = HexapodRangeOfMotion(
             hexapod_pram,
-            self._ax,
+            ax,
         )
         hexapod_range_of_motion.render()
 
-        self._ax.set_xlim(X_MIN, X_MAX)  # x 軸の範囲を設定.
-        self._ax.set_ylim(Z_MIN, Z_MAX)  # z 軸の範囲を設定.
+        ax.set_xlim(X_MIN, X_MAX)  # x 軸の範囲を設定.
+        ax.set_ylim(Z_MIN, Z_MAX)  # z 軸の範囲を設定.
 
-        self._ax.set_xlabel("x [mm]")  # x軸のラベルを設定.
-        self._ax.set_ylabel("z [mm]")  # y軸のラベルを設定.
+        ax.set_xlabel("x [mm]")  # type: ignore
+        ax.set_ylabel("z [mm]")  # type: ignore
 
-        self._ax.set_aspect("equal")  # x,y軸のスケールを揃える.
+        ax.set_aspect("equal")  # x,y軸のスケールを揃える.
 
         if display_ground_line:
-            self._ax.plot([X_MIN, X_MAX], [ground_z, ground_z])  # グラフを描画する.
+            ax.plot([X_MIN, X_MAX], [ground_z, ground_z])  # type: ignore
 
         if not do_not_show:
-            plt.show()  # 表示する.
+            plt.show()  # type: ignore
 
-        return self._fig, self._ax, self._ax_table
+        return fig, ax, ax_table
