@@ -7,14 +7,16 @@ __init__.py
 # https://opensource.org/licenses/mit-license.php
 
 
-from .mouse_grid_renderer import MouseGridRenderer
-from .color_param import ColorParam
 from .approximated_graph_renderer import ApproximatedGraphRenderer
+from .color_param import ColorParam
 from .hexapod_leg_renderer import HexapodLegRenderer
+from .hexapod_range_of_motion import HexapodRangeOfMotion
+from .mouse_grid_renderer import MouseGridRenderer
 
 __all__ = [
-    "ColorParam",
-    "MouseGridRenderer",
     "ApproximatedGraphRenderer",
+    "ColorParam",
     "HexapodLegRenderer",
+    "HexapodRangeOfMotion",
+    "MouseGridRenderer",
 ]

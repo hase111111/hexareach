@@ -6,11 +6,15 @@ hexapod_range_of_motion.py
 # Released under the MIT license
 # https://opensource.org/licenses/mit-license.php
 
+from typing import List
+
 import matplotlib.axes as axes
 import numpy as np
+from numpy.typing import NDArray
 
-from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .hexapod_param import HexapodParam
+from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from ..hexapod_param import HexapodParamProtocol
+from .color_param import ColorParam
 
 
 class HexapodRangeOfMotion:
@@ -20,13 +24,10 @@ class HexapodRangeOfMotion:
 
     def __init__(
         self,
-        hexapod_leg_range_calc: HexapodLegRangeCalculator,
-        hexapod_param: HexapodParam,
+        hexapod_param: HexapodParamProtocol,
         ax: axes.Axes,
         *,
-        color: str = "black",
-        upper_alpha: float = 0.3,
-        lowwer_alpha: float = 1.0
+        color_param: ColorParam = ColorParam(),
     ) -> None:
         """
         Parameters
@@ -44,23 +45,19 @@ class HexapodRangeOfMotion:
         lowwer_alpha : float
             下向きの可動範囲の透明度．
         """
-        self._calc = hexapod_leg_range_calc
+        self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._param = hexapod_param
         self._ax = ax
-
-        self.set_color(color)
-        self.set_upper_alpha(upper_alpha)
-        self.set_lowwer_alpha(lowwer_alpha)
-
+        self._color_param = color_param
         self._step = 0.001
 
     def render(self) -> None:
         """脚の可動範囲を描画する．"""
 
         print(f"{__name__}: Draw the range of motion of the legs")
-        print(f"{__name__}: {self._color = }")
-        print(f"{__name__}: {self._upper_alpha = }")
-        print(f"{__name__}: {self._lowwer_alpha = }")
+        print(f"{__name__}: {self._color_param.leg_range_color = }")
+        print(f"{__name__}: {self._color_param.leg_range_upper_alpha = }")
+        print(f"{__name__}: {self._color_param.leg_range_lower_alpha = }")
 
         self.render_upper_leg_range()
         self.render_lower_leg_range()
@@ -73,8 +70,8 @@ class HexapodRangeOfMotion:
             self._param.theta2_max,
             0,
             self._param.theta3_max,
-            self._color,
-            self._upper_alpha,
+            self._color_param.leg_range_color,
+            self._color_param.leg_range_upper_alpha,
         )
 
     def render_lower_leg_range(self) -> None:
@@ -85,57 +82,9 @@ class HexapodRangeOfMotion:
             self._param.theta2_max,
             self._param.theta3_min,
             0,
-            self._color,
-            self._lowwer_alpha,
+            self._color_param.leg_range_color,
+            self._color_param.leg_range_lower_alpha,
         )
-
-    def set_color(self, color: str) -> None:
-        """
-        色を設定する．
-
-        Parameters
-        ----------
-        color : str
-            色．
-        """
-
-        self._color = color
-
-    def set_upper_alpha(self, alpha: float) -> None:
-        """
-        上向きの可動範囲の透明度を設定する．
-
-        Parameters
-        ----------
-        alpha : float
-            透明度．
-        """
-
-        self._upper_alpha = alpha
-
-        # 例外を投げる
-        if self._upper_alpha < 0 or self._upper_alpha > 1:
-            raise ValueError(
-                "The value of upper_alpha is out of range. The value must be between 0 and 1."
-            )
-
-    def set_lowwer_alpha(self, alpha: float) -> None:
-        """
-        下向きの可動範囲の透明度を設定する．
-
-        Parameters
-        ----------
-        alpha : float
-            透明度．
-        """
-
-        self._lowwer_alpha = alpha
-
-        # 例外を投げる
-        if self._lowwer_alpha < 0 or self._lowwer_alpha > 1:
-            raise ValueError(
-                "The value of lowwer_alpha is out of range. The value must be between 0 and 1."
-            )
 
     def _make_leg_range(
         self,
@@ -186,8 +135,8 @@ class HexapodRangeOfMotion:
 
     def _make_leg_line(
         self,
-        theta2: np.ndarray,
-        theta3: np.ndarray,
+        theta2: NDArray[np.float64],
+        theta3: NDArray[np.float64],
         color_value: str,
         alpha_vaule: float,
     ) -> None:
@@ -196,9 +145,9 @@ class HexapodRangeOfMotion:
 
         Parameters
         ----------
-        theta2 : List[float]
+        theta2 : np.ndarray or list[float]
             theta2の配列．
-        theta3 : List[float]
+        theta3 : np.ndarray or list[float]
             theta3の配列．
         color_value : str
             色．
@@ -206,8 +155,8 @@ class HexapodRangeOfMotion:
             透明度．
         """
 
-        line_x = []
-        line_z = []
+        line_x: List[float] = []
+        line_z: List[float] = []
 
         for _, t2 in enumerate(theta2):
             for _, t3 in enumerate(theta3):
@@ -217,4 +166,4 @@ class HexapodRangeOfMotion:
                     line_x.append(x)
                     line_z.append(z)
 
-        self._ax.plot(line_x, line_z, color=color_value, alpha=alpha_vaule)
+        self._ax.plot(line_x, line_z, color=color_value, alpha=alpha_vaule)  # type: ignore

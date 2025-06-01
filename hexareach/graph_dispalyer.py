@@ -6,10 +6,7 @@
 
 from typing import Tuple
 
-# モジュールのインポート
 import matplotlib as mpl
-
-mpl.use("tkagg")
 import matplotlib.axes as axes
 import matplotlib.pyplot as plt
 
@@ -18,8 +15,10 @@ from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
 from .render.hexapod_leg_renderer import HexapodLegRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer
-from .hexapod_range_of_motion import HexapodRangeOfMotion
+from .render.hexapod_range_of_motion import HexapodRangeOfMotion
 from .hexapod_param import HexapodParam
+
+mpl.use("tkagg")
 
 
 class GraphDisplayer:
@@ -171,12 +170,8 @@ class GraphDisplayer:
 
         # 脚の可動範囲を描画する.
         hexapod_range_of_motion = HexapodRangeOfMotion(
-            hexapod_calc,
             hexapod_pram,
             self._ax,
-            color=color_rom,
-            upper_alpha=alpha_upper_rom,
-            lowwer_alpha=alpha_lower_rom,
         )
         hexapod_range_of_motion.render()
 

@@ -16,3 +16,6 @@ class ColorParam:
     approximated_graph_filled: bool = True
     leg_circle_displayed: bool = True
     leg_wedge_displayed: bool = True
+    leg_range_color: str = "black"
+    leg_range_upper_alpha: float = 0.3
+    leg_range_lower_alpha: float = 1.0
