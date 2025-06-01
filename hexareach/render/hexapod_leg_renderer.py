@@ -75,7 +75,7 @@ class HexapodLegRenderer:
             self._joint_pos[0], self._joint_pos[1])
         (self._error_joint,) = self._ax.plot(  # type: ignore
             self._joint_pos[0], self._joint_pos[1])
-        
+
         # 角度を表示するためのテーブルを登録．
         self._angle_table: Table = self._ax_table.table(  # type: ignore
             cellText=[
