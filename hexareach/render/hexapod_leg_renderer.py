@@ -19,14 +19,13 @@ from matplotlib.table import Table
 
 from .color_param import ColorParam
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from ..hexapod_param import HexapodParam
+from ..hexapod_param import HexapodParamProtocol
 
 class HexapodLegRenderer:
 
     def __init__(
         self,
-        hexapod_leg_range_calc: HexapodLegRangeCalculator,
-        hexapod_param: HexapodParam,
+        hexapod_param: HexapodParamProtocol,
         fig: Figure,
         ax: Axes,
         ax_table: Axes,
@@ -35,7 +34,7 @@ class HexapodLegRenderer:
     ) -> None:
         self._fig_name = "result/img.png"
 
-        self._calc = hexapod_leg_range_calc
+        self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._param = hexapod_param
 
         self._fig = fig

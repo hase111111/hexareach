@@ -16,7 +16,7 @@ from .render.approximated_graph_renderer import ApproximatedGraphRenderer
 from .render.hexapod_leg_renderer import HexapodLegRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer
 from .render.hexapod_range_of_motion import HexapodRangeOfMotion
-from .hexapod_param import HexapodParam
+from .hexapod_param import HexapodParamProtocol, HexapodParam
 
 mpl.use("tkagg")
 
@@ -25,7 +25,7 @@ class GraphDisplayer:
 
     def display(
         self,
-        hexapod_pram=HexapodParam(),
+        hexapod_pram : HexapodParamProtocol = HexapodParam(),
         *,
         display_table: bool=True,
         display_leg_power: bool=False,
@@ -37,9 +37,6 @@ class GraphDisplayer:
         z_min: float =-200.0,
         z_max: float =200.0,
         leg_power_step: float =2.0,
-        color_rom: str ="black",
-        alpha_upper_rom: float =0.3,
-        alpha_lower_rom: float =1.0,
         image_file_name: str="result/img_main.png",
         ground_z: float =-25.0,
         do_not_show: bool =False
@@ -155,7 +152,6 @@ class GraphDisplayer:
 
         # 脚を描画.
         self.leg_renderer = HexapodLegRenderer(
-            hexapod_calc,
             hexapod_pram,
             self._fig,
             self._ax,
