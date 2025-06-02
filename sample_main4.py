@@ -18,8 +18,6 @@ if __name__ == "__main__":
     fig, ax1, ax2 = graph.display(
         # set display options
         display_table=False,
-        display_circle=False,
-        display_wedge=False,
         display_approximated_graph=False,
         display_ground_line=False,
         # set file name to save the image
@@ -29,10 +27,10 @@ if __name__ == "__main__":
     )
 
     # Add sample points.
-    ax1.plot([0, 50, 100, 150, 200], [0, 50, 100, 150, 200], "rx")
+    ax1.plot([0, 50, 100, 150, 200], [0, 50, 100, 150, 200], "rx")  # type: ignore[no-untyped-call]
 
     # Add a line.
-    ax1.plot([0, 200], [0, -200], "b-")
+    ax1.plot([0, 200], [0, -200], "b-")  # type: ignore[no-untyped-call]
 
     # Show the graph.
-    plt.show()
+    plt.show()  # type: ignore[no-untyped-call]

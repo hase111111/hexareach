@@ -18,8 +18,6 @@ if __name__ == "__main__":
     fig, ax1, ax2 = graph1.display(
         # set display options
         display_table=False,
-        display_circle=False,
-        display_wedge=False,
         display_approximated_graph=False,
         display_ground_line=False,
         display_mouse_grid=False,
@@ -55,8 +53,6 @@ if __name__ == "__main__":
         param,
         # set display options.
         display_table=False,
-        display_circle=False,
-        display_wedge=False,
         display_approximated_graph=False,
         display_ground_line=False,
         ground_z=-30.0,
