@@ -26,6 +26,17 @@
           ]
         }
       ]
+    },
+    // run hexareach task
+    {
+      "label": "hexareach",
+      "type": "shell",
+      "command": "python3 -m hexareach",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
     }
   ]
 }

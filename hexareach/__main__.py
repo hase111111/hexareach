@@ -12,7 +12,7 @@ def main():
     Main function to display package information.
     """
 
-    print(__name__)
+    print(__package__)
     print("Copyright (c) 2023-2025 Taisei Hasegawa")
     print("Released under the MIT license")
     print("https://opensource.org/licenses/mit-license.php")
