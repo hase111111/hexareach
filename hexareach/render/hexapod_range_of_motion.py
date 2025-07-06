@@ -117,20 +117,20 @@ class HexapodRangeOfMotion:
             透明度．
         """
 
-        # minからmaxまでstep刻みで配列を作成
+        # minからmaxまでstep刻みで配列を作成.
         femur_range = np.arange(theta2_min, theta2_max, self._step)
         tibia_range = np.arange(theta3_min, theta3_max, self._step)
 
-        # femur joint (min ~ max) , tibia joint (min)
+        # femur joint (min ~ max) , tibia joint (min).
         self._make_leg_line(femur_range, np.array([theta3_min]), color_value, alpha_vaule)
 
-        # femur joint (min ~ max) , tibia joint (max)
+        # femur joint (min ~ max) , tibia joint (max).
         self._make_leg_line(femur_range, np.array([theta3_max]), color_value, alpha_vaule)
 
-        # femur joint (min) , tibia joint (min ~ max)
+        # femur joint (min) , tibia joint (min ~ max).
         self._make_leg_line(np.array([theta2_min]), tibia_range, color_value, alpha_vaule)
 
-        # femur joint (max) , tibia joint (min ~ max)
+        # femur joint (max) , tibia joint (min ~ max).
         self._make_leg_line(np.array([theta2_max]), tibia_range, color_value, alpha_vaule)
 
     def _make_leg_line(

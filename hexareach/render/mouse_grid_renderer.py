@@ -15,7 +15,7 @@ from .color_param import ColorParam
 
 class MouseGridRenderer:
     """
-    a class to draw a grid on the mouse point
+    マウス位置にグリッド線を描画するクラス
     """
 
     def __init__(
@@ -25,12 +25,25 @@ class MouseGridRenderer:
         *,
         color_param: ColorParam = ColorParam(),
     ) -> None:
+        """
+        Parameters
+        ----------
+        fig : matplotlib.figure.Figure
+            描画対象のFigureオブジェクト
+        ax : matplotlib.axes.Axes
+            描画対象のAxesオブジェクト
+        color_param : ColorParam, optional
+            グリッド線の色や透明度のパラメータ
+        """
+        # 初期化済みかどうかのフラグ
         self._alreadly_init: bool = False
 
         self._fig = fig
         self._ax = ax
+        # マウス位置に合わせて動く水平線を初期化
         self._x_axis: Line2D = self._ax.axhline(-1)  # type: ignore
         self._x_axis.set_linestyle("--")
+        # マウス位置に合わせて動く垂直線を初期化
         self._y_axis: Line2D = self._ax.axvline(-1)  # type: ignore
         self._y_axis.set_linestyle("--")
 
@@ -38,12 +51,10 @@ class MouseGridRenderer:
 
     def render(self) -> None:
         """
-        event is set, the second and subsequent calls are ignored.\n
-        If you display a matplotlib figure object after calling this
-        function, a line will be displayed to show the mouse point.
-        a line is displayed to show the mouse point.\n
-        must be called before plt.show() or plt.draw()
-        must be called after this function.
+        マウス位置グリッドの描画イベントをセットする（2回目以降は無視）
+        この関数を呼び出した後にmatplotlibのfigureを表示すると、
+        マウス位置に応じて線が表示される。
+        plt.show()やplt.draw()の前に呼び出す必要がある。
         """
 
         print(f"{__name__}: Starts drawing the mouse grid")
@@ -54,24 +65,27 @@ class MouseGridRenderer:
             print(f"{__name__}: Already initialized.")
             return
 
+        # 線の透明度を設定
         self._y_axis.set_alpha(self._color_param.mouse_grid_alpha)
         self._x_axis.set_alpha(self._color_param.mouse_grid_alpha)
 
+        # 線の色を設定
         self._y_axis.set_color(self._color_param.mouse_grid_color)
         self._x_axis.set_color(self._color_param.mouse_grid_color)
 
-        # Set functions to update the x and y axis lines when the mouse moves
+        # マウス移動時に線を更新する関数を登録
         self._fig.canvas.mpl_connect("motion_notify_event", self._on_move)
 
         self._alreadly_init = True
 
     def _on_move(self, event: Event) -> None:
+        # MouseEventでなければ何もしない
         if not isinstance(event, MouseEvent):
             return
         x = event.xdata
         y = event.ydata
         if x is None or y is None:
             return
-        # Update the x and y axis lines to the mouse position
+        # マウス位置にグリッド線を移動
         self._y_axis.set_xdata([float(x)])
         self._x_axis.set_ydata([float(y)])
