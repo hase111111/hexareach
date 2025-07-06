@@ -14,7 +14,9 @@ from matplotlib.backend_bases import Event, MouseEvent
 from .color_param import ColorParam
 
 class MouseGridRenderer:
-    """a class to draw a grid on the mouse point"""
+    """
+    a class to draw a grid on the mouse point
+    """
 
     def __init__(
         self,
