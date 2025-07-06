@@ -35,7 +35,7 @@ yaw軸周りの回転は無視し，2次元平面上で表示を行います．
 pip install git+[このレポジトリのURL]
 pip3 install git+[このレポジトリのURL] # Python3の場合
 
-# ex) pip install git+https://github.com/hase111111/phantomx-leg-display.git
+# ex) pip install git+https://github.com/hase111111/hexareach.git
 
 # 更新する場合は以下のコマンドを実行してください
 # pip install --upgrade git+[このレポジトリのURL] -U
@@ -45,11 +45,8 @@ pip3 install git+[このレポジトリのURL] # Python3の場合
 バージョン情報が表示されればインストールは成功です．
 
 ```bash
-python -m phantom_cross
-pyton3 -m phantom_cross  # Python3の場合
-
-# phantom_cross [version]
-# This is a package for hexapod robot.
+python -m hexareach  # Python2の場合
+pyton3 -m hexareach  # Python3の場合
 ```
 
 tkinterがない，というエラーが出た場合は，以下のコマンドでtkinterをインストールしてください．
