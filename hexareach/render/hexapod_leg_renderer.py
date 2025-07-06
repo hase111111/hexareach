@@ -22,6 +22,9 @@ from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..hexapod_param import HexapodParamProtocol
 
 class HexapodLegRenderer:
+    """
+    脚の可動範囲を描画するクラス．
+    """
 
     def __init__(
         self,
