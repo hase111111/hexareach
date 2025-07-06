@@ -15,6 +15,9 @@ from .hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegRangeCalculator:
+    """
+    脚の可動範囲を計算するクラス．
+    """
 
     def __init__(self, hexapod_param: HexapodParamProtocol) -> None:
         """
@@ -86,7 +89,7 @@ class HexapodLegRangeCalculator:
 
         if self._min_radius < r:
             return r
-        
+
         return self._min_radius
 
     def get_leg_position_xz(
