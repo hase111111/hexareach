@@ -12,6 +12,7 @@ from matplotlib import axes
 import numpy as np
 
 from .color_param import ColorParam
+from .display_flag import DisplayFlag
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..hexapod_param import HexapodParamProtocol
 
@@ -29,11 +30,13 @@ class ApproximatedGraphRenderer:
         ax: axes.Axes,
         *,
         color_param: ColorParam = ColorParam(),
+        display_flag: DisplayFlag = DisplayFlag(),
         z_min_max: Tuple[float, float] = (-300.0, 300.0)
     ) -> None:
         self._calc = HexapodLegRangeCalculator(hexapod_param)
         self._ax = ax
         self._color_param = color_param
+        self._display_flag = display_flag
         self._graph_step = 0.01
         self.set_range(
             z_min=z_min_max[0],
@@ -50,7 +53,7 @@ class ApproximatedGraphRenderer:
 
         color = self._color_param.approximated_graph_color
         alpha = self._color_param.approximated_graph_alpha
-        draw_fill = self._color_param.approximated_graph_filled
+        draw_fill = self._display_flag.approximated_graph_filled
 
         # Calculate the range of motion of the approximated leg.
         # Create an array z from z_min to z_max in graph_step ticks.

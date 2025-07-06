@@ -18,6 +18,7 @@ from matplotlib.backend_bases import Event, MouseEvent
 from matplotlib.table import Table
 
 from .color_param import ColorParam
+from .display_flag import DisplayFlag
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..hexapod_param import HexapodParamProtocol
 
@@ -34,6 +35,7 @@ class HexapodLegRenderer:
         ax_table: Axes,
         *,
         color_param: ColorParam = ColorParam(),
+        display_flag: DisplayFlag = DisplayFlag()
     ) -> None:
         self._fig_name = "result/img.png"
 
@@ -44,6 +46,7 @@ class HexapodLegRenderer:
         self._ax = ax
         self._ax_table = ax_table
         self._color_param = color_param
+        self._display_flag = display_flag
 
         self._wedge_r = 20.0  # 扇形の半径．
 
@@ -104,8 +107,8 @@ class HexapodLegRenderer:
         """
 
         print(f"{__name__}: Starts drawing the leg")
-        print(f"{__name__}: {self._color_param.leg_circle_displayed = }")
-        print(f"{__name__}: {self._color_param.leg_wedge_displayed = }")
+        print(f"{__name__}: {self._display_flag.leg_circle_displayed = }")
+        print(f"{__name__}: {self._display_flag.leg_wedge_displayed = }")
 
         # すでに初期化済みの場合は何もしない．
         if self._alreadly_init:
@@ -118,14 +121,14 @@ class HexapodLegRenderer:
         self._femur_circle.set_alpha(0.1)
         self._tibia_circle.set_alpha(0.1)
 
-        self._femur_circle.set_visible(self._color_param.leg_circle_displayed)
-        self._tibia_circle.set_visible(self._color_param.leg_circle_displayed)
+        self._femur_circle.set_visible(self._display_flag.leg_circle_displayed)
+        self._tibia_circle.set_visible(self._display_flag.leg_circle_displayed)
 
         self._ax.add_artist(self._femur_circle)
         self._ax.add_artist(self._tibia_circle)
 
-        self._femur_wedge.set_visible(self._color_param.leg_wedge_displayed)
-        self._tibia_wedge.set_visible(self._color_param.leg_wedge_displayed)
+        self._femur_wedge.set_visible(self._display_flag.leg_wedge_displayed)
+        self._tibia_wedge.set_visible(self._display_flag.leg_wedge_displayed)
 
         self._ax.add_artist(self._femur_wedge)
         self._ax.add_artist(self._tibia_wedge)
