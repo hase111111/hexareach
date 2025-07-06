@@ -1,8 +1,9 @@
 
 # Hexareach
 
-Trossen Robotics社のPhantomX Hexapodの脚の可動域を表示するプログラムです．
-卒業研究のために作成したプログラムです．
+Trossen Robotics社製の6脚ロボット，PhantomX のような，yaw - pitch - pitch の間接配置の脚の可動域を表示するプログラムです．
+
+プログラムのパラメータを調整することで，様々な脚ロボットの表示に対応可能です．
 
 <div align="center">
     <img src="/docs/img/table.jpg" width="95%">
@@ -63,9 +64,9 @@ sudo apt-get install python3-tk
 詳細な使用方法については，[GraphDisplayerについて](docs/about_graph_displayer.md)を参照してください．
 
 ```python
-import phantom_cross as pc
+import hexareach as hxr
 
-gd = pc.GraphDisplayer()
+gd = hxr.GraphDisplayer()
 gd.display()
 ```
 
@@ -76,14 +77,14 @@ gd.display()
 詳細な使用方法については，[HexapodParamについて](docs/about_hexapod_param.md)を参照してください．
 
 ```python
-import phantom_cross as pc
+import hexareach as hxr
 
-hp = pc.HexapodParam()
+hp = hxr.HexapodParam()
 hp.coxa_length = 0.0
 hp.femur_length = 100.0
 hp.tibia_length = 100.0
 
-gd = pc.GraphDisplayer(hp)
+gd = hxr.GraphDisplayer(hp)
 gd.display(hp)
 ```
 
@@ -101,7 +102,3 @@ gd.display(hp)
 MITライセンスです．
 
 詳細は，[LICENSE](LICENSE.txt)を参照してください．
-
-## 著者
-
-- [hase111111](https://github.com/hase111111)
