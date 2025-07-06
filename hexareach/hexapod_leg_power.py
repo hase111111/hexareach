@@ -6,11 +6,12 @@
 
 import copy
 import math
+from typing import Any
 
 import numpy as np
-import matplotlib as mpl
-import matplotlib.axes as axes
-import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 import tqdm
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
@@ -18,13 +19,16 @@ from .hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegPower:
+    """
+    脚の力の分布を描画するクラス．
+    """
 
     def __init__(
         self,
         hexapod_leg_range_calc: HexapodLegRangeCalculator,
         hexapod_param: HexapodParamProtocol,
-        figure: plt.Figure,
-        ax: axes.Axes,
+        figure: Figure,
+        ax: Axes,
         *,
         step: float = 1.0,
         x_min: float = -300,
@@ -115,16 +119,16 @@ class HexapodLegPower:
                 power_array[j][i] = self._get_max_power(x_range[i], z_range[j], 0, 1)
 
         # power_arrayを等高線で描画する
-        cmap = copy.copy(mpl.cm.get_cmap("jet"))
+        cmap = copy.copy(cm.get_cmap("jet"))
         cmap.set_under("silver")
         cmap.set_over("silver")
-        power_contourf = self._ax.contourf(
+        power_contourf = self._ax.contourf(  # type: ignore
             x_range, z_range, power_array, cmap=cmap, levels=20, vmin=4.0, vmax=20.0
         )
 
         # カラーバーを表示する
-        cbar = self._figure.colorbar(power_contourf)
-        cbar.set_label("[N]", fontsize=20)
+        cbar = self._figure.colorbar(power_contourf)  # type: ignore
+        cbar.set_label("[N]", fontsize=20)  # type: ignore
 
     def _get_max_power(
         self, x: float, z: float, power_x: float, power_z: float
@@ -183,10 +187,10 @@ class HexapodLegPower:
             jacobian = self._make_jacobian(angle[1], angle[2])
 
             # 力のベクトルを作成 [F_x, F_z]^T
-            power = np.matrix([[(float)(power_x * p)], [(float)(power_z * p)]])
+            power = np.array([[float(power_x * p)], [float(power_z * p)]])
 
             # トルクを計算する [tauqe_femur, tauqe_tibia]^T
-            tauqe = np.dot(jacobian.T, power)  # t = J^T * F
+            tauqe = jacobian.T @ power  # t = J^T * F
 
             # トルクの絶対値を計算する
             femur_tauqe = math.fabs(tauqe[0][0])
@@ -203,7 +207,7 @@ class HexapodLegPower:
 
         return (float)(ans)
 
-    def _make_jacobian(self, theta2: float, theta3: float) -> np.matrix:
+    def _make_jacobian(self, theta2: float, theta3: float) -> np.ndarray[Any, Any]:
         """
         ヤコビ行列を計算する．
 
@@ -216,7 +220,7 @@ class HexapodLegPower:
 
         Returns
         -------
-        jacobian : np.matrix
+        jacobian : np.ndarray
             2*2のヤコビ行列．
         """
 
@@ -224,7 +228,7 @@ class HexapodLegPower:
         Lt = self._param.tibia_length
 
         # 2*2のヤコビ行列を作成
-        jacobian = np.matrix(
+        jacobian = np.array(
             [
                 [
                     -Lf * math.sin(theta2) - Lt * math.sin(theta2 + theta3),
