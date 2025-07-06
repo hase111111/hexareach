@@ -1,4 +1,6 @@
-"""graph_dispalyer.py"""
+"""
+graph_dispalyer.py
+"""
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
 # Released under the MIT license
@@ -7,8 +9,9 @@
 from typing import Tuple
 
 import matplotlib as mpl
-import matplotlib.axes as axes
 import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 
 from .hexapod_leg_power import HexapodLegPower
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
@@ -22,6 +25,9 @@ mpl.use("tkagg")
 
 
 class GraphDisplayer:
+    """
+    グラフを表示するクラス．
+    """
 
     def display(
         self,
@@ -40,7 +46,7 @@ class GraphDisplayer:
         image_file_name: str="result/img_main.png",
         ground_z: float =-25.0,
         do_not_show: bool =False
-    ) -> Tuple[plt.Figure, axes.Axes, axes.Axes]:
+    ) -> Tuple[Figure, Axes, Axes]:
         """
         x_min < x < x_max , z_min < z < z_max の範囲でグラフを描画する．\n
         変数の値を変更することで処理の内容を変更できる．
@@ -104,11 +110,6 @@ class GraphDisplayer:
             表のaxesオブジェクト．
         """
 
-        X_MIN = x_min
-        X_MAX = x_max
-        Z_MIN = z_min
-        Z_MAX = z_max
-
         if display_table:
             fig = plt.figure()  # type: ignore
             ax = fig.add_subplot(1, 2, 1)  # type: ignore
@@ -129,10 +130,10 @@ class GraphDisplayer:
             hexapod_pram,
             fig,
             ax,
-            x_min=X_MIN,
-            x_max=X_MAX,
-            z_min=Z_MIN,
-            z_max=Z_MAX,
+            x_min=x_min,
+            x_max=x_max,
+            z_min=z_min,
+            z_max=z_max,
             step=leg_power_step,
         )
 
@@ -143,7 +144,7 @@ class GraphDisplayer:
         app_graph = ApproximatedGraphRenderer(
             hexapod_pram,
             ax,
-            z_min_max=(Z_MIN, Z_MAX)
+            z_min_max=(z_min, z_max)
         )
 
         if display_approximated_graph:
@@ -166,8 +167,8 @@ class GraphDisplayer:
         )
         hexapod_range_of_motion.render()
 
-        ax.set_xlim(X_MIN, X_MAX)  # x 軸の範囲を設定.
-        ax.set_ylim(Z_MIN, Z_MAX)  # z 軸の範囲を設定.
+        ax.set_xlim(x_min, x_max)  # x 軸の範囲を設定.
+        ax.set_ylim(z_min, z_max)  # z 軸の範囲を設定.
 
         ax.set_xlabel("x [mm]")  # type: ignore
         ax.set_ylabel("z [mm]")  # type: ignore
@@ -175,7 +176,7 @@ class GraphDisplayer:
         ax.set_aspect("equal")  # x,y軸のスケールを揃える.
 
         if display_ground_line:
-            ax.plot([X_MIN, X_MAX], [ground_z, ground_z])  # type: ignore
+            ax.plot([x_min, x_max], [ground_z, ground_z])  # type: ignore
 
         if not do_not_show:
             plt.show()  # type: ignore
