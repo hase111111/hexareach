@@ -1,5 +1,5 @@
 
-# hexareach
+# Hexareach
 
 Trossen Robotics社のPhantomX Hexapodの脚の可動域を表示するプログラムです．
 卒業研究のために作成したプログラムです．
