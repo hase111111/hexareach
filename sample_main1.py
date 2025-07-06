@@ -8,11 +8,11 @@ This is a sample code to display the phantom X graph.
 # https://opensource.org/licenses/mit-license.php
 
 
-import hexareach as hr
+import hexareach as hxr
 
 
 if __name__ == "__main__":
     # Display the phantom X graph.
-    graph = hr.GraphDisplayer()
+    graph = hxr.GraphDisplayer()
 
     graph.display()

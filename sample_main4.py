@@ -9,11 +9,11 @@ Sample code for adding dots and lines to a graph
 
 import matplotlib.pyplot as plt
 
-import hexareach as hr
+import hexareach as hxr
 
 
 if __name__ == "__main__":
-    graph = hr.GraphDisplayer()
+    graph = hxr.GraphDisplayer()
 
     fig, ax1, ax2 = graph.display(
         # set display options
