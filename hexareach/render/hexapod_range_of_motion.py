@@ -8,7 +8,7 @@ hexapod_range_of_motion.py
 
 from typing import List
 
-import matplotlib.axes as axes
+from matplotlib.axes import Axes
 import numpy as np
 from numpy.typing import NDArray
 
@@ -25,7 +25,7 @@ class HexapodRangeOfMotion:
     def __init__(
         self,
         hexapod_param: HexapodParamProtocol,
-        ax: axes.Axes,
+        ax: Axes,
         *,
         color_param: ColorParam = ColorParam(),
     ) -> None:
