@@ -67,7 +67,7 @@ class ApproximatedGraphRenderer:
         この関数を呼ぶ前に set_range 関数で範囲を設定しておく必要がある。
         """
 
-        print(f"{__name__}: 脚の可動範囲の近似値を表示します")
+        print(f"{__name__}: Starts drawing the approximated graph")
 
         color = self._color_param.approximated_graph_color
         alpha = self._color_param.approximated_graph_alpha

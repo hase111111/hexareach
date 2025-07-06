@@ -163,6 +163,7 @@ class GraphDisplayer:
         # 脚の可動範囲を描画する.
         hexapod_range_of_motion = HexapodRangeOfMotion(
             hexapod_pram,
+            fig,
             ax,
         )
         hexapod_range_of_motion.render()
