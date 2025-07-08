@@ -13,11 +13,11 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from matplotlib.backend_bases import Event, MouseEvent
-from matplotlib.table import Table
 
 from .color_param import ColorParam
 from .display_flag import DisplayFlag
 from .circle_rednerer import CircleRenderer
+from .leg_param_table import LegParamTable
 from .wedge_rednerer import WedgeRenderer
 from ..calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..calc.hexapod_param import HexapodParamProtocol
@@ -44,7 +44,7 @@ class HexapodLegRenderer:
 
         self._fig = fig
         self._ax = ax
-        self._ax_table = ax_table
+        self._table = LegParamTable(ax_table)
         self._color_param = color_param
         self._display_flag = display_flag
 
@@ -103,26 +103,6 @@ class HexapodLegRenderer:
         (self._error_joint,) = self._ax.plot(  # type: ignore
             self._joint_pos[0], self._joint_pos[1])
 
-        # 角度を表示するためのテーブルを登録．
-        self._angle_table: Table = self._ax_table.table(  # type: ignore
-            cellText=[
-                ["Joint", "Angle [deg]"],
-                ["coxa", ""],
-                ["femur", ""],
-                ["tibia", ""],
-                ["coxa servo", ""],
-                ["femur servo", ""],
-                ["tibia servo", ""],
-                ["left coxa servo", ""],
-                ["left femur servo", ""],
-                ["left tibia servo", ""],
-                ["right coxa servo", ""],
-                ["right femur servo", ""],
-                ["right tibia servo", ""],
-            ],
-            loc="center",
-        )
-
     def render(self) -> None:
         """
         イベントを設定する,初期化処理.2度目以降の呼び出しは無視される．
@@ -168,9 +148,6 @@ class HexapodLegRenderer:
 
         # マウスが左クリックされたときに呼び出す関数を設定．
         self._fig.canvas.mpl_connect("button_press_event", self._on_click)
-
-        self._ax_table.axis("off")
-        self._ax_table.axis("tight")
 
         # 初期化済みフラグを立てる．
         self._alreadly_init = True
@@ -243,60 +220,16 @@ class HexapodLegRenderer:
             self._leg_graph.set_color("red")
 
         # 表を更新．
-        self._angle_table._cells[(1, 1)]._text.set_text(  # type: ignore
-            f"{math.degrees(angle[0]):.3f}")
-        self._angle_table._cells[(2, 1)]._text.set_text(  # type: ignore
-            f"{math.degrees(angle[1]):.3f}"
-        )
-        self._angle_table._cells[(3, 1)]._text.set_text(  # type: ignore
-            f"{math.degrees(angle[2]):.3f}"
-        )
-
         _, ar_s, ar_ls, ar_rs = self._calc.calc_inverse_kinematics_xz_arduino(
             mouse_x, -mouse_z
         )
-        self._angle_table._cells[(4, 1)]._text.set_text(str(ar_s[0]))  # type: ignore
-        self._angle_table._cells[(5, 1)]._text.set_text(str(ar_s[1]))  # type: ignore
-        self._angle_table._cells[(6, 1)]._text.set_text(str(ar_s[2]))  # type: ignore
 
-        table_error_color = "red"
-        table_normal_color = "white"
-
-        self._angle_table._cells[(7, 1)]._text.set_text(str(ar_ls[0]) + " (226 ~ 789)")  # type: ignore
-        if ar_ls[0] < 226 or ar_ls[0] > 789:
-            self._angle_table._cells[(7, 1)].set_facecolor(table_error_color)  # type: ignore
-        else:
-            self._angle_table._cells[(7, 1)].set_facecolor(table_normal_color)  # type: ignore
-
-        self._angle_table._cells[(8, 1)]._text.set_text(str(ar_ls[1]) + " (156 ~ 858)")  # type: ignore
-        if ar_ls[1] < 156 or ar_ls[1] > 858:
-            self._angle_table._cells[(8, 1)].set_facecolor(table_error_color)  # type: ignore
-        else:
-            self._angle_table._cells[(8, 1)].set_facecolor(table_normal_color)  # type: ignore
-
-        self._angle_table._cells[(9, 1)]._text.set_text(str(ar_ls[2]) + " (272 ~ 859)")  # type: ignore
-        if ar_ls[2] < 272 or ar_ls[2] > 859:
-            self._angle_table._cells[(9, 1)].set_facecolor(table_error_color)  # type: ignore
-        else:
-            self._angle_table._cells[(9, 1)].set_facecolor(table_normal_color)  # type: ignore
-
-        self._angle_table._cells[(10, 1)]._text.set_text(str(ar_rs[0]) + " (223 ~ 789)")  # type: ignore
-        if ar_rs[0] < 223 or ar_rs[0] > 789:
-            self._angle_table._cells[(10, 1)].set_facecolor(table_error_color)  # type: ignore
-        else:
-            self._angle_table._cells[(10, 1)].set_facecolor(table_normal_color)  # type: ignore
-
-        self._angle_table._cells[(11, 1)]._text.set_text(str(ar_rs[1]) + " (156 ~ 860)")  # type: ignore
-        if ar_rs[1] < 156 or ar_rs[1] > 860:
-            self._angle_table._cells[(11, 1)].set_facecolor(table_error_color)  # type: ignore
-        else:
-            self._angle_table._cells[(11, 1)].set_facecolor(table_normal_color)  # type: ignore
-
-        self._angle_table._cells[(12, 1)]._text.set_text(str(ar_rs[2]) + " (157 ~ 743)")  # type: ignore
-        if ar_rs[2] < 157 or ar_rs[2] > 743:
-            self._angle_table._cells[(12, 1)].set_facecolor(table_error_color)  # type: ignore
-        else:
-            self._angle_table._cells[(12, 1)].set_facecolor(table_normal_color)  # type: ignore
+        self._table.on_update(
+            angle,
+            ar_s,
+            ar_ls,
+            ar_rs
+        )
 
         # グラフを再描画．
         plt.draw()
