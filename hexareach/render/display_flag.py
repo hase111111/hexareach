@@ -14,3 +14,8 @@ class DisplayFlag:
     approximated_graph_filled: bool = True
     leg_circle_displayed: bool = True
     leg_wedge_displayed: bool = True
+    display_table: bool = True
+    display_leg_power: bool = False
+    display_approximated_graph: bool = True
+    display_mouse_grid: bool = True
+    display_ground_line: bool = True

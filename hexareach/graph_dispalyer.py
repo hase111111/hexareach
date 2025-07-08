@@ -15,11 +15,13 @@ from matplotlib.figure import Figure
 
 from .hexapod_leg_power import HexapodLegPower
 from .calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .render.approximated_graph_renderer import ApproximatedGraphRenderer
-from .render.hexapod_leg_renderer import HexapodLegRenderer
-from .render.mouse_grid_renderer import MouseGridRenderer
-from .render.hexapod_range_of_motion_renderer import HexapodRangeOfMotionRenderer
 from .calc.hexapod_param import HexapodParamProtocol
+from .render.approximated_graph_renderer import ApproximatedGraphRenderer
+from .render.color_param import ColorParam
+from .render.display_flag import DisplayFlag
+from .render.hexapod_leg_renderer import HexapodLegRenderer
+from .render.hexapod_range_of_motion_renderer import HexapodRangeOfMotionRenderer
+from .render.mouse_grid_renderer import MouseGridRenderer
 
 mpl.use("tkagg")
 
@@ -33,15 +35,12 @@ class GraphDisplayer:
         self,
         hexapod_pram : HexapodParamProtocol,
         *,
-        display_table: bool=True,
-        display_leg_power: bool=False,
-        display_approximated_graph: bool=True,
-        display_mouse_grid: bool=True,
-        display_ground_line: bool=True,
         x_min: float =-100.0,
         x_max: float =300.0,
         z_min: float =-200.0,
         z_max: float =200.0,
+        display_flag: DisplayFlag = DisplayFlag(),
+        color_param: ColorParam = ColorParam(),
         leg_power_step: float =2.0,
         image_file_name: str="result/img_main.png",
         ground_z: float =-25.0,
@@ -110,7 +109,7 @@ class GraphDisplayer:
             表のaxesオブジェクト．
         """
 
-        if display_table:
+        if display_flag.display_table:
             fig = plt.figure()  # type: ignore
             ax = fig.add_subplot(1, 2, 1)  # type: ignore
             ax_table = fig.add_subplot(1, 2, 2)  # type: ignore
@@ -137,27 +136,33 @@ class GraphDisplayer:
             step=leg_power_step,
         )
 
-        if display_leg_power:
+        if display_flag.display_leg_power:
             hexapod_leg_power.render()
 
         # 脚の可動範囲の近似値を描画.
         app_graph = ApproximatedGraphRenderer(
             hexapod_pram,
             ax,
+            color_param= color_param,
+            display_flag= display_flag,
             z_min_max=(z_min, z_max)
         )
 
-        if display_approximated_graph:
+        if display_flag.display_approximated_graph:
             app_graph.render()
 
         # 脚を描画.
-        leg_renderer = HexapodLegRenderer(hexapod_pram, fig, ax, ax_table)
+        leg_renderer = HexapodLegRenderer(
+            hexapod_pram, fig, ax, ax_table,
+            color_param= color_param,
+            display_flag= display_flag
+        )
         leg_renderer.set_img_file_name(image_file_name)
         leg_renderer.render()
 
         # マウスがグラフのどこをポイントしているかを示す線を描画する.
-        mouse_grid_renderer = MouseGridRenderer(fig, ax)
-        if display_mouse_grid:
+        mouse_grid_renderer = MouseGridRenderer(fig, ax, color_param= color_param)
+        if display_flag.display_mouse_grid:
             mouse_grid_renderer.render()
 
         # 脚の可動範囲を描画する.
@@ -165,6 +170,7 @@ class GraphDisplayer:
             hexapod_pram,
             fig,
             ax,
+            color_param= color_param
         )
         hexapod_range_of_motion.render()
 
@@ -176,7 +182,7 @@ class GraphDisplayer:
 
         ax.set_aspect("equal")  # x,y軸のスケールを揃える.
 
-        if display_ground_line:
+        if display_flag.display_ground_line:
             ax.plot([x_min, x_max], [ground_z, ground_z])  # type: ignore
 
         if not do_not_show:
