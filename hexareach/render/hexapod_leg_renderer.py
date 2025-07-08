@@ -70,14 +70,14 @@ class HexapodLegRenderer:
         self._femur_circle = CircleRenderer(
             self._ax, self._param.femur_length,
             (0.0, 0.0),
-            color="black",
-            alpha=0.1,
+            color=self._color_param.leg_circle_color,
+            alpha=self._color_param.leg_circle_alpha,
         )
         self._tibia_circle = CircleRenderer(
             self._ax, self._param.tibia_length,
             (0.0, 0.0),
-            color="black",
-            alpha=0.1,
+            color=self._color_param.leg_circle_color,
+            alpha=self._color_param.leg_circle_alpha,
         )
 
         # 角度用の扇形を登録．
