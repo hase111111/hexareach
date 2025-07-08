@@ -8,7 +8,7 @@ phantomx_mk2_param.py
 
 import math
 
-from .hexapod_param import HexapodParamProtocol
+from .hexapod_param_protocol import HexapodParamProtocol
 
 
 class PhantomxMk2Param(HexapodParamProtocol):

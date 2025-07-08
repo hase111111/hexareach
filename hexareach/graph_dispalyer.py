@@ -15,7 +15,7 @@ from matplotlib.figure import Figure
 
 from .hexapod_leg_power import HexapodLegPower
 from .calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .calc.hexapod_param import HexapodParamProtocol
+from .calc.hexapod_param_protocol import HexapodParamProtocol
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
 from .render.color_param import ColorParam
 from .render.display_flag import DisplayFlag

@@ -7,7 +7,7 @@ __init__.py
 # https://opensource.org/licenses/mit-license.php
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .hexapod_param import HexapodParamProtocol
+from .hexapod_param_protocol import HexapodParamProtocol
 from .phatomx_mk2_param import PhantomxMk2Param
 
 __all__ = [

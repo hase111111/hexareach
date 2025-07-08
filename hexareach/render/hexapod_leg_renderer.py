@@ -20,7 +20,7 @@ from .circle_rednerer import CircleRenderer
 from .leg_param_table import LegParamTable
 from .wedge_rednerer import WedgeRenderer
 from ..calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from ..calc.hexapod_param import HexapodParamProtocol
+from ..calc.hexapod_param_protocol import HexapodParamProtocol
 
 class HexapodLegRenderer:
     """

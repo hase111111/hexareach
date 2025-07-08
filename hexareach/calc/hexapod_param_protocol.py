@@ -1,5 +1,5 @@
 """
-hexapod_param.py
+hexapod_param_protocol.py
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa

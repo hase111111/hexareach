@@ -14,7 +14,7 @@ import numpy as np
 from .color_param import ColorParam
 from .display_flag import DisplayFlag
 from ..calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from ..calc.hexapod_param import HexapodParamProtocol
+from ..calc.hexapod_param_protocol import HexapodParamProtocol
 
 
 class ApproximatedGraphRenderer:
