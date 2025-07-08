@@ -13,12 +13,12 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patch
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
-from matplotlib.patches import Circle
 from matplotlib.backend_bases import Event, MouseEvent
 from matplotlib.table import Table
 
 from .color_param import ColorParam
 from .display_flag import DisplayFlag
+from .circle_rednerer import CircleRenderer
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..calc.hexapod_param import HexapodParamProtocol
 
@@ -67,8 +67,18 @@ class HexapodLegRenderer:
         self._reverse = False
 
         # 脚の可動範囲を表示するための円を登録．
-        self._femur_circle = Circle((0.0, 0.0), color="black", fill=False)
-        self._tibia_circle = Circle((0.0, 0.0), color="black", fill=False)
+        self._femur_circle = CircleRenderer(
+            self._ax, self._param.femur_length,
+            (0.0, 0.0),
+            color="black",
+            alpha=0.1,
+        )
+        self._tibia_circle = CircleRenderer(
+            self._ax, self._param.tibia_length,
+            (0.0, 0.0),
+            color="black",
+            alpha=0.1,
+        )
 
         # 角度用の扇形を登録．
         self._femur_wedge = patch.Wedge((0.0, 0.0), self._wedge_r, 0, 10)
@@ -115,17 +125,9 @@ class HexapodLegRenderer:
             print(f"{__name__}: Already initialized.")
             return
 
-        self._femur_circle.set_radius(self._param.femur_length)
-        self._tibia_circle.set_radius(self._param.tibia_length)
-
-        self._femur_circle.set_alpha(0.1)
-        self._tibia_circle.set_alpha(0.1)
-
-        self._femur_circle.set_visible(self._display_flag.leg_circle_displayed)
-        self._tibia_circle.set_visible(self._display_flag.leg_circle_displayed)
-
-        self._ax.add_artist(self._femur_circle)
-        self._ax.add_artist(self._tibia_circle)
+        # 脚の付け根の円を描画．
+        self._femur_circle.render()
+        self._tibia_circle.render()
 
         self._femur_wedge.set_visible(self._display_flag.leg_wedge_displayed)
         self._tibia_wedge.set_visible(self._display_flag.leg_wedge_displayed)
@@ -182,8 +184,8 @@ class HexapodLegRenderer:
         self._leg_graph.set_visible(True)
 
         # 脚の付け根の円を描画．
-        self._femur_circle.center = [self._joint_pos[0][1], self._joint_pos[1][1]]
-        self._tibia_circle.center = [self._joint_pos[0][2], self._joint_pos[1][2]]
+        self._femur_circle.update_center((self._joint_pos[0][1], self._joint_pos[1][1]))
+        self._tibia_circle.update_center((self._joint_pos[0][2], self._joint_pos[1][2]))
 
         # 扇形を描画．
         self._femur_wedge.set_center((self._joint_pos[0][1], self._joint_pos[1][1]))
