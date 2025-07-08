@@ -18,7 +18,7 @@ from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
 from .render.hexapod_leg_renderer import HexapodLegRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer
-from .render.hexapod_range_of_motion import HexapodRangeOfMotion
+from .render.hexapod_range_of_motion_renderer import HexapodRangeOfMotionRenderer
 from .hexapod_param import HexapodParamProtocol, HexapodParam
 
 mpl.use("tkagg")
@@ -161,7 +161,7 @@ class GraphDisplayer:
             mouse_grid_renderer.render()
 
         # 脚の可動範囲を描画する.
-        hexapod_range_of_motion = HexapodRangeOfMotion(
+        hexapod_range_of_motion = HexapodRangeOfMotionRenderer(
             hexapod_pram,
             fig,
             ax,

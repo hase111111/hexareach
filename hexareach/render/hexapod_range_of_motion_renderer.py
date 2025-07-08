@@ -1,5 +1,5 @@
 """
-hexapod_range_of_motion.py
+hexapod_range_of_motion_renderer.py
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
@@ -19,7 +19,7 @@ from ..hexapod_param import HexapodParamProtocol
 from .color_param import ColorParam
 
 
-class HexapodRangeOfMotion:
+class HexapodRangeOfMotionRenderer:
     """
     脚の可動範囲を描画するクラス．
     """
