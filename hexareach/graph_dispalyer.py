@@ -19,7 +19,7 @@ from .render.approximated_graph_renderer import ApproximatedGraphRenderer
 from .render.hexapod_leg_renderer import HexapodLegRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer
 from .render.hexapod_range_of_motion_renderer import HexapodRangeOfMotionRenderer
-from .hexapod_param import HexapodParamProtocol, HexapodParam
+from .calc.hexapod_param import HexapodParamProtocol
 
 mpl.use("tkagg")
 
@@ -31,7 +31,7 @@ class GraphDisplayer:
 
     def display(
         self,
-        hexapod_pram : HexapodParamProtocol = HexapodParam(),
+        hexapod_pram : HexapodParamProtocol,
         *,
         display_table: bool=True,
         display_leg_power: bool=False,

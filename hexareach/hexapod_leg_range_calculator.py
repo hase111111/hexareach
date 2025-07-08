@@ -11,7 +11,7 @@ import math
 from typing import Tuple, List
 
 from .math.triangle_checker import TriangleChecker
-from .hexapod_param import HexapodParamProtocol
+from .calc.hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegRangeCalculator:

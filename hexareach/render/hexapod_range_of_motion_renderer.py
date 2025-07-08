@@ -15,7 +15,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from ..hexapod_param import HexapodParamProtocol
+from ..calc.hexapod_param import HexapodParamProtocol
 from .color_param import ColorParam
 
 

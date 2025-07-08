@@ -17,7 +17,7 @@ import numpy as np
 import tqdm
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .hexapod_param import HexapodParamProtocol
+from .calc.hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegPower:

@@ -10,7 +10,8 @@ __init__.py
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .hexapod_leg_power import HexapodLegPower
 from .graph_dispalyer import GraphDisplayer
-from .hexapod_param import HexapodParam
+from .calc.phatomx_mk2_param import PhantomxMk2Param
+from .calc.hexapod_param import HexapodParamProtocol
 
 # パッケージのバージョンはsetup.pyに記載
 # The package version is specified in setup.py
@@ -19,5 +20,6 @@ __all__ = [
     "GraphDisplayer",
     "HexapodLegPower",
     "HexapodLegRangeCalculator",
-    "HexapodParam",
+    "HexapodParamProtocol",
+    "PhantomxMk2Param",
 ]

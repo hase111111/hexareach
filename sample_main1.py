@@ -15,4 +15,4 @@ if __name__ == "__main__":
     # Display the phantom X graph.
     graph = hxr.GraphDisplayer()
 
-    graph.display()
+    graph.display(hxr.PhantomxMk2Param())
