@@ -20,3 +20,5 @@ class ColorParam:
     leg_range_lower_alpha: float = 1.0
     leg_circle_color: str = "black"
     leg_circle_alpha: float = 0.1
+    leg_wedge_color: str = "blue"
+    leg_wedge_alpha: float = 1.0
