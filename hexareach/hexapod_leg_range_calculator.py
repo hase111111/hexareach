@@ -11,6 +11,7 @@ import math
 from typing import Tuple, List
 
 from .math.triangle_checker import TriangleChecker
+from .math.clamp_angle import clamp_angle
 from .calc.hexapod_param import HexapodParamProtocol
 
 
@@ -232,7 +233,7 @@ class HexapodLegRangeCalculator:
         if reverse_flag:
             q2 = -q2
         angle.append(q1 + q2)
-        angle[1] = self._clamp_angle(angle[1])  # -180度～180度に収める．
+        angle[1] = clamp_angle(angle[1])  # -180度～180度に収める．
         joint_pos[0].append(
             (self._param.femur_length * math.cos(angle[1])) + joint_pos[0][1]
         )
@@ -249,7 +250,7 @@ class HexapodLegRangeCalculator:
             )
             - angle[1]
         )
-        angle[2] = self._clamp_angle(angle[2])  # -180度～180度に収める．
+        angle[2] = clamp_angle(angle[2])  # -180度～180度に収める．
         return True, joint_pos, angle
 
     def calc_inverse_kinematics_xz_arduino(
@@ -407,24 +408,3 @@ class HexapodLegRangeCalculator:
                 self._approximate_max_leg_raudus[z] = (float)(x) - r_margin
 
         return
-
-    def _clamp_angle(self, angle: float) -> float:
-        """
-        角度を-180 ~ 180の範囲にする.
-
-        Parameters
-        ----------
-        angle : float
-            角度 [rad]
-
-        Returns
-        -------
-        res : float
-            角度 [rad]
-        """
-        while angle > math.pi or angle < -math.pi:
-            if angle > math.pi:
-                angle -= math.pi * 2.0
-            elif angle < -math.pi:
-                angle += math.pi * 2.0
-        return angle
