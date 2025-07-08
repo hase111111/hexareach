@@ -1,4 +1,6 @@
-"""hexapod_leg_power.py"""
+"""
+hexapod_leg_power.py
+"""
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
 # Released under the MIT license
@@ -8,10 +10,10 @@ import copy
 import math
 from typing import Any
 
-import numpy as np
-import matplotlib.cm as cm
+from matplotlib import cm
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+import numpy as np
 import tqdm
 
 from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
