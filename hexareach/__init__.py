@@ -7,7 +7,7 @@ __init__.py
 # https://opensource.org/licenses/mit-license.php
 
 
-from .hexapod_leg_power import HexapodLegPower
+from .render.hexapod_leg_power import HexapodLegPower
 from .graph_dispalyer import GraphDisplayer
 from .calc.phatomx_mk2_param import PhantomxMk2Param
 from .calc.hexapod_param_protocol import HexapodParamProtocol

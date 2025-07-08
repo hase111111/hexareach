@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from .hexapod_leg_power import HexapodLegPower
+from .render.hexapod_leg_power import HexapodLegPower
 from .calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .calc.hexapod_param_protocol import HexapodParamProtocol
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
