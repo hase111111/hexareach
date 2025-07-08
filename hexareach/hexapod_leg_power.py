@@ -67,9 +67,6 @@ class HexapodLegPower:
         self.set_range(x_min, x_max, z_min, z_max)
 
         self._param = hexapod_param
-        # 何%ごとに進捗を表示するか. 5%ごとならば，20回に1回表示するため20を指定する．
-        self._PRINT_DIV = int(20)
-
 
     def render(self) -> None:
         """
@@ -226,19 +223,19 @@ class HexapodLegPower:
             2*2のヤコビ行列．
         """
 
-        Lf = self._param.femur_length
-        Lt = self._param.tibia_length
+        lf = self._param.femur_length
+        lt = self._param.tibia_length
 
         # 2*2のヤコビ行列を作成
         jacobian = np.array(
             [
                 [
-                    -Lf * math.sin(theta2) - Lt * math.sin(theta2 + theta3),
-                    -Lt * math.sin(theta2 + theta3),
+                    -lf * math.sin(theta2) - lt * math.sin(theta2 + theta3),
+                    -lt * math.sin(theta2 + theta3),
                 ],
                 [
-                    Lf * math.cos(theta2) + Lt * math.cos(theta2 + theta3),
-                    Lt * math.cos(theta2 + theta3),
+                    lf * math.cos(theta2) + lt * math.cos(theta2 + theta3),
+                    lt * math.cos(theta2 + theta3),
                 ],
             ]
         )

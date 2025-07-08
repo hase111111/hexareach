@@ -14,6 +14,7 @@ if __name__ == "__main__":
     graph = hxr.GraphDisplayer()
 
     graph.display(
+        hxr.PhantomxMk2Param(),
         # set display options.
         display_approximated_graph=False,
         display_leg_power=True,
