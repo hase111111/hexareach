@@ -29,7 +29,7 @@ class HexapodLegRangeCalculator:
         self._debug_flag = False
         self._param = hexapod_param
 
-        # Calculate the maximum radius of the leg.
+        # 脚の可動範囲の最大半径を計算する．
         self._init_approximate_max_leg_raudus()
 
     def get_approximate_min_leg_raudus(self) -> float:
@@ -66,10 +66,13 @@ class HexapodLegRangeCalculator:
         # z座標が正の値の場合は、脚の可動範囲内なので最大半径を返す．
         r = self._approximate_max_leg_raudus[(int)(-z)]
 
-        if self._param.approx_min_radius< r:
-            return r
+        if r < self._param.approx_min_radius :
+            return self._param.approx_min_radius
 
-        return self._param.approx_min_radius
+        if self._param.approx_max_radius < r:
+            return self._param.approx_max_radius
+
+        return r
 
     def get_leg_position_xz(
         self, theta2: float, theta3: float
