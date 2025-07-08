@@ -73,30 +73,13 @@ class HexapodLegPower:
         """
 
         print(
-            "HexapodLegPower.render: Draws the distribution of forces. "
-            "Please wait 10 seconds for this time-consuming process."
+            f"{__name__}: Draws the distribution of forces. "
+            "Please wait about 10 seconds for this time-consuming process."
         )
         print(
-            "HexapodLegPower.render: "
-            + "x_min = "
-            + str(self._x_min)
-            + "[mm], "
-            + "x_max = "
-            + str(self._x_max)
-            + "[mm], "
-            + "z_min = "
-            + str(self._z_min)
-            + "[mm], "
-            + "z_max = "
-            + str(self._z_max)
-            + "[mm], "
-            + "step = "
-            + str(self._step)
-            + "[mm], "
-            + "torque_max = "
-            + str(self._param.torque_max)
-            + "[N*mm] "
-        )
+            f"{__name__}: {self._x_min =}[mm], {self._x_max =}[mm], "
+            f"{self._z_min =}[mm], {self._z_max =}[mm], "
+            f"{self._step =}[mm], {self._param.torque_max = }")
 
         # x_min < x < x_max , z_min < z < z_max の範囲でグラフを描画するため，
         # min から max まで self.__step づつ増やした数値を格納した配列を作成する．
