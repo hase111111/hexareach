@@ -25,3 +25,4 @@ class HexapodParamProtocol(Protocol):
     theta3_min: float
     torque_max: float
     approx_min_radius: float
+    approx_max_radius: float
