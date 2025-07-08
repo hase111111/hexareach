@@ -60,10 +60,23 @@ class HexapodLegPower:
         self._calc = hexapod_leg_range_calc
         self._figure = figure
         self._ax = ax
-        self.set_step(step)
-        self.set_range(rect[0], rect[1], rect[2], rect[3])
-
+        self._x_min = rect[0]
+        self._x_max = rect[1]
+        self._z_min = rect[2]
+        self._z_max = rect[3]
+        self._step = step
         self._param = hexapod_param
+
+        if self._step < 1:
+            raise ValueError(
+                f"{__name__}: step is less than or equal to 1"
+            )
+
+        if self._x_min >= self._x_max:
+            raise ValueError(f"{__name__}: x_min >= x_max")
+
+        if self._z_min >= self._z_max:
+            raise ValueError(f"{__name__}: z_min >= z_max")
 
     def render(self) -> None:
         """
@@ -221,47 +234,3 @@ class HexapodLegPower:
         )
 
         return jacobian
-
-    def set_step(self, step: float) -> None:
-        """
-        何mmごとに力の分布を計算するかを設定する．
-
-        Parameters
-        ----------
-        step : float
-            何mmごとに力の分布を計算するか．
-        """
-
-        self._step = step
-
-        if self._step < 1:
-            raise ValueError(
-                "HexapodLegPower.set_step: step is less than or equal to 1"
-            )
-
-    def set_range(self, x_min: float, x_max: float, z_min: float, z_max: float) -> None:
-        """
-        脚の可動範囲を設定する．
-
-        Parameters
-        ----------
-        x_min : float
-            x軸の最小値
-        x_max : float
-            x軸の最大値
-        z_min : float
-            z軸の最小値
-        z_max : float
-            z軸の最大値
-        """
-
-        self._x_min = x_min
-        self._x_max = x_max
-        self._z_min = z_min
-        self._z_max = z_max
-
-        if self._x_min >= self._x_max:
-            raise ValueError("HexapodLegPower.set_range: x_min >= x_max")
-
-        if self._z_min >= self._z_max:
-            raise ValueError("HexapodLegPower.set_range: z_min >= z_max")
