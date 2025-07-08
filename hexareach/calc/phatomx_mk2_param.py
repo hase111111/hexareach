@@ -26,3 +26,4 @@ class PhantomxMk2Param(HexapodParamProtocol):
     theta3_min: float = math.radians(-145.0)  # [rad]
     torque_max: float = 1800.0  # [N*mm] ストールトルク(停動トルク)
     approx_min_radius: float = 140.0  # [mm]
+    approx_max_radius: float = 250.0  # [mm]
