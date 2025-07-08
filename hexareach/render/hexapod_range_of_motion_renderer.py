@@ -14,7 +14,7 @@ from matplotlib.lines import Line2D
 import numpy as np
 from numpy.typing import NDArray
 
-from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from ..calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..calc.hexapod_param import HexapodParamProtocol
 from .color_param import ColorParam
 

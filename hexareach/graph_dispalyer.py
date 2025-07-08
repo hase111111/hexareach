@@ -14,7 +14,7 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
 from .hexapod_leg_power import HexapodLegPower
-from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from .calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
 from .render.hexapod_leg_renderer import HexapodLegRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer

@@ -10,9 +10,9 @@ import math
 
 from typing import Tuple, List
 
-from .math.triangle_checker import TriangleChecker
-from .math.clamp_angle import clamp_angle
-from .calc.hexapod_param import HexapodParamProtocol
+from ..math.triangle_checker import TriangleChecker
+from ..math.clamp_angle import clamp_angle
+from .hexapod_param import HexapodParamProtocol
 
 
 class HexapodLegRangeCalculator:

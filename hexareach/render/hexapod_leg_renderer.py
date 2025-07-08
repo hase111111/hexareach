@@ -19,7 +19,7 @@ from .color_param import ColorParam
 from .display_flag import DisplayFlag
 from .circle_rednerer import CircleRenderer
 from .wedge_rednerer import WedgeRenderer
-from ..hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from ..calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from ..calc.hexapod_param import HexapodParamProtocol
 
 class HexapodLegRenderer:

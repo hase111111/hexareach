@@ -16,7 +16,7 @@ from matplotlib.figure import Figure
 import numpy as np
 import tqdm
 
-from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from .calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
 from .calc.hexapod_param import HexapodParamProtocol
 
 
