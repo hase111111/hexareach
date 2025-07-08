@@ -35,10 +35,7 @@ class GraphDisplayer:
         self,
         hexapod_pram : HexapodParamProtocol,
         *,
-        x_min: float =-100.0,
-        x_max: float =300.0,
-        z_min: float =-200.0,
-        z_max: float =200.0,
+        rect: Tuple[float, float, float, float] = (-100.0, 300.0, -200.0, 200.0),
         display_flag: DisplayFlag = DisplayFlag(),
         color_param: ColorParam = ColorParam(),
         leg_power_step: float =2.0,
@@ -125,14 +122,8 @@ class GraphDisplayer:
 
         # 脚が出せる力のグラフを描画.
         hexapod_leg_power = HexapodLegPower(
-            hexapod_calc,
-            hexapod_pram,
-            fig,
-            ax,
-            x_min=x_min,
-            x_max=x_max,
-            z_min=z_min,
-            z_max=z_max,
+            hexapod_calc, hexapod_pram, fig, ax,
+            rect=rect,
             step=leg_power_step,
         )
 
@@ -145,7 +136,7 @@ class GraphDisplayer:
             ax,
             color_param= color_param,
             display_flag= display_flag,
-            z_min_max=(z_min, z_max)
+            z_min_max=(rect[2], rect[3])
         )
 
         if display_flag.display_approximated_graph:
@@ -174,8 +165,8 @@ class GraphDisplayer:
         )
         hexapod_range_of_motion.render()
 
-        ax.set_xlim(x_min, x_max)  # x 軸の範囲を設定.
-        ax.set_ylim(z_min, z_max)  # z 軸の範囲を設定.
+        ax.set_xlim(rect[0], rect[1])  # x 軸の範囲を設定.
+        ax.set_ylim(rect[2], rect[3])  # z 軸の範囲を設定.
 
         ax.set_xlabel("x [mm]")  # type: ignore
         ax.set_ylabel("z [mm]")  # type: ignore
@@ -183,7 +174,7 @@ class GraphDisplayer:
         ax.set_aspect("equal")  # x,y軸のスケールを揃える.
 
         if display_flag.display_ground_line:
-            ax.plot([x_min, x_max], [ground_z, ground_z])  # type: ignore
+            ax.plot([rect[0], rect[1]], [ground_z, ground_z])  # type: ignore
 
         if not do_not_show:
             plt.show()  # type: ignore

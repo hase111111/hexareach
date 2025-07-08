@@ -8,7 +8,7 @@ hexapod_leg_power.py
 
 import copy
 import math
-from typing import Any
+from typing import Any, Tuple
 
 from matplotlib import cm
 from matplotlib.axes import Axes
@@ -33,10 +33,7 @@ class HexapodLegPower:
         ax: Axes,
         *,
         step: float = 1.0,
-        x_min: float = -300,
-        x_max: float = 300,
-        z_min: float = -300,
-        z_max: float = 300
+        rect: Tuple[float, float, float, float] = (-100.0, 300.0, -200.0, 200.0),
     ) -> None:
         """
         Parameters
@@ -64,7 +61,7 @@ class HexapodLegPower:
         self._figure = figure
         self._ax = ax
         self.set_step(step)
-        self.set_range(x_min, x_max, z_min, z_max)
+        self.set_range(rect[0], rect[1], rect[2], rect[3])
 
         self._param = hexapod_param
 

@@ -12,14 +12,15 @@ import hexareach as hxr
 
 if __name__ == "__main__":
     graph = hxr.GraphDisplayer()
+    flag = hxr.DisplayFlag()
+    flag.display_leg_power = True
+    flag.display_table = False
+    flag.leg_circle_displayed = False
+    flag.leg_wedge_displayed = False
 
     graph.display(
         hxr.PhantomxMk2Param(),
-        # set display options.
-        display_approximated_graph=False,
-        display_leg_power=True,
-        display_ground_line=False,
-        # set step size of force distribution.
+        display_flag=flag,
         leg_power_step=5.0,
         # set file name to save the image.
         image_file_name="result/sample_main2.png",
