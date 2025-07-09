@@ -95,8 +95,8 @@ class HexapodLegPower:
 
         # x_min < x < x_max , z_min < z < z_max の範囲でグラフを描画するため，
         # min から max まで self.__step づつ増やした数値を格納した配列を作成する．
-        x_range: npt.NDArray[np.floating] = np.arange(self._x_min, self._x_max + 1, self._step)
-        z_range: npt.NDArray[np.floating] = np.arange(self._z_min, self._z_max + 1, self._step)
+        x_range: npt.NDArray[np.float_] = np.arange(self._x_min, self._x_max + 1, self._step)
+        z_range: npt.NDArray[np.float_] = np.arange(self._z_min, self._z_max + 1, self._step)
 
         # x*zの要素数を持つ2次元配列power_arrayを作成する(xが列，zが行)
         power_array = self._calc.calculate(x_range, z_range)
