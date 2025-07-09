@@ -1,6 +1,6 @@
 """
 sample_main2.py
-Sample to calculate force distribution.
+脚先が出すことができる力を計算するサンプルプログラム.
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
@@ -12,6 +12,7 @@ import hexareach as hxr
 
 if __name__ == "__main__":
     graph = hxr.GraphDisplayer()
+
     flag = hxr.DisplayFlag()
     flag.display_leg_power = True
     flag.display_table = False
@@ -25,5 +26,3 @@ if __name__ == "__main__":
         # set file name to save the image.
         image_file_name="result/sample_main2.png",
     )
-
-    # By clicking the left mouse button, an image of the leg at that position can be saved.

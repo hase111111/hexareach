@@ -1,6 +1,6 @@
 """
 sample_main3.py
-Sample code to change robot conditions and display graphs
+ロボットのパラメータを変更して表示する場合のサンプルプログラム.
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
@@ -14,39 +14,34 @@ import hexareach as hxr
 
 
 if __name__ == "__main__":
-    param = hxr.PhantomxMk2Param()
+    class OriginalRobotParam(hxr.HexapodParamProtocol):
+        """
+        このような形で可動範囲を計算したいロボット用に,
+        HexapodParamProtocolを継承したクラスを作成すること.
+        """
 
-    # Change the robot conditions.
-    param.coxa_length = 0.0
-    param.femur_length = 100.0
-    param.tibia_length = 100.0
+        coxa_length: float = 0.0  # [mm]
+        femur_length: float = 100.0  # [mm]
+        tibia_length: float = 100.0  # [mm]
+        theta1_max: float = math.radians(0.0)  # [rad]
+        theta1_min: float = math.radians(0.0)  # [rad]
+        theta2_max: float = math.radians(100.0)  # [rad]
+        theta2_min: float = math.radians(-100)  # [rad]
+        theta3_max: float = math.radians(120.0)  # [rad]
+        theta3_min: float = math.radians(-120.0)  # [rad]
+        torque_max: float = 0.0  # [N*mm] ストールトルク(停動トルク)
+        approx_min_radius: float = 0  # [mm]
+        approx_max_radius: float = 250.0  # [mm]
 
-    param.theta2_max = math.radians(100.0)
-    param.theta2_min = math.radians(-100.0)
-
-    param.theta3_max = math.radians(100.0)
-    param.theta3_min = math.radians(-100.0)
-
-    # param.torque_max = 1000.0
-
-    # Display the phantom cross graph.
     graph = hxr.GraphDisplayer()
+    param = OriginalRobotParam()
+
+    flag = hxr.DisplayFlag()
+    flag.display_table = False
+    flag.display_approximated_graph = False
 
     graph.display(
-        # use the changed robot conditions.
         param,
-        # set display options.
-        display_table=False,
-        display_approximated_graph=False,
-        display_ground_line=False,
-        display_mouse_grid=False,
-        # display_leg_power=True,
-        # leg_power_step=5.0,
-        # set display range.
-        x_min=-250.0,
-        x_max=250.0,
-        z_min=-250.0,
-        z_max=250,
-        # set file name to save the image.
-        image_file_name="result/sample_main3.png",
-    )
+        display_flag=flag,
+        rect=(-250.0, 250.0, -250.0, 250.0),
+        image_file_name="result/sample_main3.png")
