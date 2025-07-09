@@ -280,9 +280,9 @@ class HexapodLegRangeCalculator:
         angle.append(0.0)  # 第1関節の角度は0度．
 
         true_x = x - self._param.coxa_length
-        im = math.sqrt(math.pow(true_x, 2) + math.pow(z, 2))  # length of imaginary leg.
+        im = math.sqrt(math.pow(true_x, 2) + math.pow(z, 2))  # im = imaginary leg.
 
-        # get femur angle above horizon...
+        # femur 間接の角度の計算.
         q1 = -math.atan2(z, true_x)
         d1 = (
             math.pow(self._param.femur_length, 2)
@@ -296,7 +296,7 @@ class HexapodLegRangeCalculator:
             q2 = 0.0
         angle.append(q1 + q2)
 
-        # and tibia angle from femur...
+        # tibia 間接の角度を計算.
         d1 = (
             math.pow(self._param.femur_length, 2)
             - math.pow(im, 2)
@@ -308,6 +308,7 @@ class HexapodLegRangeCalculator:
         except ValueError:
             angle.append(0.0)
 
+        # サーボの角度に変換.
         servo_angle: List[int] = []
         servo_angle.append((int)(angle[0] * 100.0 / 51.0 * 100.0))
         servo_angle.append((int)(angle[1] * 100.0 / 51.0 * 100.0))
@@ -354,7 +355,7 @@ class HexapodLegRangeCalculator:
 
     def _init_approximate_max_leg_raudus(self) -> None:
         """
-        脚の最大半径を計算する privateメソッド.
+        脚の最大半径を計算する.
         """
 
         # 近似された脚の可動範囲の最大半径のリスト，z軸の座標軸の取り方が逆なので，zを反転させる．
@@ -386,7 +387,7 @@ class HexapodLegRangeCalculator:
                 )
                 im = math.sqrt(math.pow(ik_true_x, 2.0) + math.pow(line_end_z, 2.0))
                 if im == 0:
-                    im += 0.0000001
+                    im += 0.0000001  # 少しだけ値を大きくし，0除算を避ける.
 
                 # q1 = -math.atan2(line_end_z, ik_true_x)
                 q2_upper = (
