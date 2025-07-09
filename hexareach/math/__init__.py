@@ -8,7 +8,9 @@ __init__.py
 
 
 from .triangle_checker import TriangleChecker
+from .clamp_angle import clamp_angle
 
 __all__ = [
     "TriangleChecker",
+    "clamp_angle"
 ]

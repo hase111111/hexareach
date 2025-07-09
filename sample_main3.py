@@ -14,7 +14,7 @@ import hexareach as hxr
 
 
 if __name__ == "__main__":
-    param = hxr.HexapodParam()
+    param = hxr.PhantomxMk2Param()
 
     # Change the robot conditions.
     param.coxa_length = 0.0

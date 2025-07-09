@@ -13,13 +13,15 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from .hexapod_leg_power import HexapodLegPower
-from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from .render.hexapod_leg_power import HexapodLegPower
+from .calc.hexapod_leg_range_calculator import HexapodLegRangeCalculator
+from .calc.hexapod_param_protocol import HexapodParamProtocol
 from .render.approximated_graph_renderer import ApproximatedGraphRenderer
+from .render.color_param import ColorParam
+from .render.display_flag import DisplayFlag
 from .render.hexapod_leg_renderer import HexapodLegRenderer
+from .render.hexapod_range_of_motion_renderer import HexapodRangeOfMotionRenderer
 from .render.mouse_grid_renderer import MouseGridRenderer
-from .render.hexapod_range_of_motion import HexapodRangeOfMotion
-from .hexapod_param import HexapodParamProtocol, HexapodParam
 
 mpl.use("tkagg")
 
@@ -31,17 +33,11 @@ class GraphDisplayer:
 
     def display(
         self,
-        hexapod_pram : HexapodParamProtocol = HexapodParam(),
+        hexapod_pram : HexapodParamProtocol,
         *,
-        display_table: bool=True,
-        display_leg_power: bool=False,
-        display_approximated_graph: bool=True,
-        display_mouse_grid: bool=True,
-        display_ground_line: bool=True,
-        x_min: float =-100.0,
-        x_max: float =300.0,
-        z_min: float =-200.0,
-        z_max: float =200.0,
+        rect: Tuple[float, float, float, float] = (-100.0, 300.0, -200.0, 200.0),
+        display_flag: DisplayFlag = DisplayFlag(),
+        color_param: ColorParam = ColorParam(),
         leg_power_step: float =2.0,
         image_file_name: str="result/img_main.png",
         ground_z: float =-25.0,
@@ -110,7 +106,7 @@ class GraphDisplayer:
             表のaxesオブジェクト．
         """
 
-        if display_table:
+        if display_flag.display_table:
             fig = plt.figure()  # type: ignore
             ax = fig.add_subplot(1, 2, 1)  # type: ignore
             ax_table = fig.add_subplot(1, 2, 2)  # type: ignore
@@ -126,57 +122,59 @@ class GraphDisplayer:
 
         # 脚が出せる力のグラフを描画.
         hexapod_leg_power = HexapodLegPower(
-            hexapod_calc,
-            hexapod_pram,
-            fig,
-            ax,
-            x_min=x_min,
-            x_max=x_max,
-            z_min=z_min,
-            z_max=z_max,
+            hexapod_calc, hexapod_pram, fig, ax,
+            rect=rect,
             step=leg_power_step,
         )
 
-        if display_leg_power:
+        if display_flag.display_leg_power:
             hexapod_leg_power.render()
 
         # 脚の可動範囲の近似値を描画.
         app_graph = ApproximatedGraphRenderer(
             hexapod_pram,
             ax,
-            z_min_max=(z_min, z_max)
+            color_param= color_param,
+            display_flag= display_flag,
+            z_min_max=(rect[2], rect[3])
         )
 
-        if display_approximated_graph:
+        if display_flag.display_approximated_graph:
             app_graph.render()
 
         # 脚を描画.
-        leg_renderer = HexapodLegRenderer(hexapod_pram, fig, ax, ax_table)
+        leg_renderer = HexapodLegRenderer(
+            hexapod_pram, fig, ax, ax_table,
+            color_param= color_param,
+            display_flag= display_flag
+        )
         leg_renderer.set_img_file_name(image_file_name)
         leg_renderer.render()
 
         # マウスがグラフのどこをポイントしているかを示す線を描画する.
-        mouse_grid_renderer = MouseGridRenderer(fig, ax)
-        if display_mouse_grid:
+        mouse_grid_renderer = MouseGridRenderer(fig, ax, color_param= color_param)
+        if display_flag.display_mouse_grid:
             mouse_grid_renderer.render()
 
         # 脚の可動範囲を描画する.
-        hexapod_range_of_motion = HexapodRangeOfMotion(
+        hexapod_range_of_motion = HexapodRangeOfMotionRenderer(
             hexapod_pram,
+            fig,
             ax,
+            color_param= color_param
         )
         hexapod_range_of_motion.render()
 
-        ax.set_xlim(x_min, x_max)  # x 軸の範囲を設定.
-        ax.set_ylim(z_min, z_max)  # z 軸の範囲を設定.
+        ax.set_xlim(rect[0], rect[1])  # x 軸の範囲を設定.
+        ax.set_ylim(rect[2], rect[3])  # z 軸の範囲を設定.
 
         ax.set_xlabel("x [mm]")  # type: ignore
         ax.set_ylabel("z [mm]")  # type: ignore
 
         ax.set_aspect("equal")  # x,y軸のスケールを揃える.
 
-        if display_ground_line:
-            ax.plot([x_min, x_max], [ground_z, ground_z])  # type: ignore
+        if display_flag.display_ground_line:
+            ax.plot([rect[0], rect[1]], [ground_z, ground_z])  # type: ignore
 
         if not do_not_show:
             plt.show()  # type: ignore

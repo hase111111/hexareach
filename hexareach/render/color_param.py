@@ -7,15 +7,18 @@ color_param.py
 # https://opensource.org/licenses/mit-license.php
 
 class ColorParam:
-    """Struct that stores color parameters."""
+    """
+    グラフの色に関するパラメータを格納するクラス.
+    """
 
     mouse_grid_color: str = "black"
     mouse_grid_alpha: float = 1.0
     approximated_graph_color: str = "green"
     approximated_graph_alpha: float = 0.5
-    approximated_graph_filled: bool = True
-    leg_circle_displayed: bool = True
-    leg_wedge_displayed: bool = True
     leg_range_color: str = "black"
     leg_range_upper_alpha: float = 0.3
     leg_range_lower_alpha: float = 1.0
+    leg_circle_color: str = "black"
+    leg_circle_alpha: float = 0.1
+    leg_wedge_color: str = "blue"
+    leg_wedge_alpha: float = 1.0

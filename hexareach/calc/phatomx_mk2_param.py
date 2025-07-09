@@ -1,5 +1,5 @@
 """
-hexapod_param.py
+phantomx_mk2_param.py
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
@@ -7,28 +7,11 @@ hexapod_param.py
 # https://opensource.org/licenses/mit-license.php
 
 import math
-from typing import Protocol
+
+from .hexapod_param_protocol import HexapodParamProtocol
 
 
-class HexapodParamProtocol(Protocol):
-    """
-    Protocol for storing Hexapod parameters.
-    The HexapodParam class implements this protocol.
-    """
-    coxa_length: float
-    femur_length: float
-    tibia_length: float
-    theta1_max: float
-    theta1_min: float
-    theta2_max: float
-    theta2_min: float
-    theta3_max: float
-    theta3_min: float
-    torque_max: float
-    approx_min_radius: float
-
-
-class HexapodParam(HexapodParamProtocol):
+class PhantomxMk2Param(HexapodParamProtocol):
     """
     Class for storing PhantomX parameters.
     """
@@ -43,3 +26,4 @@ class HexapodParam(HexapodParamProtocol):
     theta3_min: float = math.radians(-145.0)  # [rad]
     torque_max: float = 1800.0  # [N*mm] ストールトルク(停動トルク)
     approx_min_radius: float = 140.0  # [mm]
+    approx_max_radius: float = 250.0  # [mm]
