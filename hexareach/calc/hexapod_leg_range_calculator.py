@@ -10,11 +10,15 @@ import math
 
 from typing import Tuple, List
 
-from .math.triangle_checker import TriangleChecker
-from .hexapod_param import HexapodParamProtocol
+from ..math.triangle_checker import TriangleChecker
+from ..math.clamp_angle import clamp_angle
+from .hexapod_param_protocol import HexapodParamProtocol
 
 
 class HexapodLegRangeCalculator:
+    """
+    脚の可動範囲を計算するクラス．
+    """
 
     def __init__(self, hexapod_param: HexapodParamProtocol) -> None:
         """
@@ -26,28 +30,8 @@ class HexapodLegRangeCalculator:
         self._debug_flag = False
         self._param = hexapod_param
 
-        # Calculate the maximum radius of the leg.
+        # 脚の可動範囲の最大半径を計算する．
         self._init_approximate_max_leg_raudus()
-        self._min_radius = self._param.approx_min_radius
-
-        if self._min_radius < 0:
-            raise ValueError("r must be greater than 0")
-
-    def set_approximate_min_leg_raudus(self, r: float) -> None:
-        """
-        Sets the minimum radius of the legs.
-
-        Parameters
-        ----------
-        r : float
-            Minimum radius of legs [mm].
-        """
-
-        self._min_radius = r
-
-        # Check if the minimum radius is valid.
-        if self._min_radius < 0:
-            raise ValueError("r must be greater than 0")
 
     def get_approximate_min_leg_raudus(self) -> float:
         """
@@ -59,7 +43,7 @@ class HexapodLegRangeCalculator:
             脚の最小半径 [mm]
         """
 
-        return self._min_radius
+        return self._param.approx_min_radius
 
     def get_approximate_max_leg_raudus(self, z: float) -> float:
         """
@@ -76,18 +60,20 @@ class HexapodLegRangeCalculator:
             脚がx方向に脚を伸ばせる最大半径 [mm]
         """
 
-        # Returns 0 if z is out of range.
+        # z座標が負の値の場合は、脚の可動範囲外なので最小半径を返す．
         if -z < 0 or len(self._approximate_max_leg_raudus) < -z:
-            return self._min_radius
+            return self._param.approx_min_radius
 
-        # Reverse the z-axis coordinate axis,
-        # because the way it is taken is the other way around.
+        # z座標が正の値の場合は、脚の可動範囲内なので最大半径を返す．
         r = self._approximate_max_leg_raudus[(int)(-z)]
 
-        if self._min_radius < r:
-            return r
-        
-        return self._min_radius
+        if r < self._param.approx_min_radius :
+            return self._param.approx_min_radius
+
+        if self._param.approx_max_radius < r:
+            return self._param.approx_max_radius
+
+        return r
 
     def get_leg_position_xz(
         self, theta2: float, theta3: float
@@ -247,7 +233,7 @@ class HexapodLegRangeCalculator:
         if reverse_flag:
             q2 = -q2
         angle.append(q1 + q2)
-        angle[1] = self._clamp_angle(angle[1])  # -180度～180度に収める．
+        angle[1] = clamp_angle(angle[1])  # -180度～180度に収める．
         joint_pos[0].append(
             (self._param.femur_length * math.cos(angle[1])) + joint_pos[0][1]
         )
@@ -264,7 +250,7 @@ class HexapodLegRangeCalculator:
             )
             - angle[1]
         )
-        angle[2] = self._clamp_angle(angle[2])  # -180度～180度に収める．
+        angle[2] = clamp_angle(angle[2])  # -180度～180度に収める．
         return True, joint_pos, angle
 
     def calc_inverse_kinematics_xz_arduino(
@@ -294,9 +280,9 @@ class HexapodLegRangeCalculator:
         angle.append(0.0)  # 第1関節の角度は0度．
 
         true_x = x - self._param.coxa_length
-        im = math.sqrt(math.pow(true_x, 2) + math.pow(z, 2))  # length of imaginary leg.
+        im = math.sqrt(math.pow(true_x, 2) + math.pow(z, 2))  # im = imaginary leg.
 
-        # get femur angle above horizon...
+        # femur 間接の角度の計算.
         q1 = -math.atan2(z, true_x)
         d1 = (
             math.pow(self._param.femur_length, 2)
@@ -310,7 +296,7 @@ class HexapodLegRangeCalculator:
             q2 = 0.0
         angle.append(q1 + q2)
 
-        # and tibia angle from femur...
+        # tibia 間接の角度を計算.
         d1 = (
             math.pow(self._param.femur_length, 2)
             - math.pow(im, 2)
@@ -322,6 +308,7 @@ class HexapodLegRangeCalculator:
         except ValueError:
             angle.append(0.0)
 
+        # サーボの角度に変換.
         servo_angle: List[int] = []
         servo_angle.append((int)(angle[0] * 100.0 / 51.0 * 100.0))
         servo_angle.append((int)(angle[1] * 100.0 / 51.0 * 100.0))
@@ -368,7 +355,7 @@ class HexapodLegRangeCalculator:
 
     def _init_approximate_max_leg_raudus(self) -> None:
         """
-        脚の最大半径を計算する privateメソッド.
+        脚の最大半径を計算する.
         """
 
         # 近似された脚の可動範囲の最大半径のリスト，z軸の座標軸の取り方が逆なので，zを反転させる．
@@ -400,7 +387,7 @@ class HexapodLegRangeCalculator:
                 )
                 im = math.sqrt(math.pow(ik_true_x, 2.0) + math.pow(line_end_z, 2.0))
                 if im == 0:
-                    im += 0.0000001
+                    im += 0.0000001  # 少しだけ値を大きくし，0除算を避ける.
 
                 # q1 = -math.atan2(line_end_z, ik_true_x)
                 q2_upper = (
@@ -422,24 +409,3 @@ class HexapodLegRangeCalculator:
                 self._approximate_max_leg_raudus[z] = (float)(x) - r_margin
 
         return
-
-    def _clamp_angle(self, angle: float) -> float:
-        """
-        角度を-180 ~ 180の範囲にする.
-
-        Parameters
-        ----------
-        angle : float
-            角度 [rad]
-
-        Returns
-        -------
-        res : float
-            角度 [rad]
-        """
-        while angle > math.pi or angle < -math.pi:
-            if angle > math.pi:
-                angle -= math.pi * 2.0
-            elif angle < -math.pi:
-                angle += math.pi * 2.0
-        return angle

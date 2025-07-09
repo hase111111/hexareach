@@ -1,6 +1,6 @@
 """
 sample_main1.py
-This is a sample code to display the phantom X graph.
+PhantomX Mk-2 の脚の可動範囲を計算する基本的なサンプルプログラム.
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
@@ -8,11 +8,11 @@ This is a sample code to display the phantom X graph.
 # https://opensource.org/licenses/mit-license.php
 
 
-import hexareach as hr
+import hexareach as hxr
 
 
 if __name__ == "__main__":
     # Display the phantom X graph.
-    graph = hr.GraphDisplayer()
+    graph = hxr.GraphDisplayer()
 
-    graph.display()
+    graph.display(hxr.PhantomxMk2Param())

@@ -11,7 +11,7 @@ import numpy as np
 
 class TriangleChecker:
     """
-    A class that determines the validity of triangles.
+    三角形が成立するかどうかを判定するクラス.
     """
 
     def __init__(self) -> None:
@@ -19,32 +19,28 @@ class TriangleChecker:
 
     def check(self, len1: float, len2: float, len3: float) -> bool:
         """
-        Function to determine if a triangle is formed
-        from the lengths of three given sides. \n
-        Returns True if the triangle can be formed. \n
-        For a, b, c
-        (a + b > c) and
-        (b + c > a) and
+        3辺の長さから三角形が成立するかどうかを判定する関数.
+        三角形が成立する場合はTrueを返す.
+        a, b, cについて
+        (a + b > c) かつ
+        (b + c > a) かつ
         (c + a > b)
-        is true, then a triangle can be formed.
+        が成り立つとき、三角形が成立する.
 
-        Parameters
+        パラメータ
         ----------
         len1 : float
-            Length of side 1.
+            辺1の長さ
         len2 : float
-            Length of side 2.
+            辺2の長さ
         len3 : float
-            The length of side 3.
+            辺3の長さ
         """
-
+        # いずれかの2辺の和が残りの1辺以下なら三角形は成立しない.
         if np.abs(len1) + np.abs(len2) <= np.abs(len3):
             return False
-
         if np.abs(len2) + np.abs(len3) <= np.abs(len1):
             return False
-
         if np.abs(len3) + np.abs(len1) <= np.abs(len2):
             return False
-
         return True

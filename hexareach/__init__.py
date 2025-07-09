@@ -7,10 +7,12 @@ __init__.py
 # https://opensource.org/licenses/mit-license.php
 
 
-from .hexapod_leg_range_calculator import HexapodLegRangeCalculator
-from .hexapod_leg_power import HexapodLegPower
+from .render.hexapod_leg_power import HexapodLegPower
 from .graph_dispalyer import GraphDisplayer
-from .hexapod_param import HexapodParam
+from .calc.phatomx_mk2_param import PhantomxMk2Param
+from .calc.hexapod_param_protocol import HexapodParamProtocol
+from .render.display_flag import DisplayFlag
+from .render.color_param import ColorParam
 
 # パッケージのバージョンはsetup.pyに記載
 # The package version is specified in setup.py
@@ -18,6 +20,8 @@ from .hexapod_param import HexapodParam
 __all__ = [
     "GraphDisplayer",
     "HexapodLegPower",
-    "HexapodLegRangeCalculator",
-    "HexapodParam",
+    "HexapodParamProtocol",
+    "PhantomxMk2Param",
+    "DisplayFlag",
+    "ColorParam",
 ]
