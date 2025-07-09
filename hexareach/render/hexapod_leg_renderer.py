@@ -7,7 +7,7 @@ hexapod_leg_renderer.py
 # https://opensource.org/licenses/mit-license.php
 
 import math
-from typing import List
+from typing import List, Optional
 
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
@@ -32,7 +32,7 @@ class HexapodLegRenderer:
         hexapod_param: HexapodParamProtocol,
         fig: Figure,
         ax: Axes,
-        ax_table: Axes,
+        ax_table: Optional[Axes],
         *,
         color_param: ColorParam = ColorParam(),
         display_flag: DisplayFlag = DisplayFlag()
@@ -44,7 +44,7 @@ class HexapodLegRenderer:
 
         self._fig = fig
         self._ax = ax
-        self._table = LegParamTable(ax_table)
+        self._table = LegParamTable(ax_table)  # type: ignore
         self._color_param = color_param
         self._display_flag = display_flag
 

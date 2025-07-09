@@ -70,7 +70,7 @@ class GraphDisplayer:
             else:
                 fig = figure
                 ax = axes
-                ax_table = axes
+                ax_table = None
 
         # 以下グラフの作成，描画.
         hexapod_calc = HexapodLegRangeCalculator(hexapod_pram)
