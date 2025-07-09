@@ -1,6 +1,6 @@
 """
 sample_main1.py
-This is a sample code to display the phantom X graph.
+PhantomX Mk-2 の脚の可動範囲を計算する基本的なサンプルプログラム.
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
