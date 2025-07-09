@@ -31,8 +31,8 @@ class LegPowerCalculator:
 
     def calculate(
         self,
-        x_range: npt.NDArray[np.float64],
-        z_range:npt.NDArray[np.float64]):
+        x_range: npt.NDArray[np.floating],
+        z_range:npt.NDArray[np.floating]):
         """
         xとzの範囲内でロボットが出すことができる脚先の力を計算する.
         """
