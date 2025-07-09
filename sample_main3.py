@@ -40,6 +40,7 @@ if __name__ == "__main__":
     flag.display_table = False
     flag.display_approximated_graph = False
 
+    # rect を変更することで，描画領域を調整することができます.
     graph.display(
         param,
         display_flag=flag,

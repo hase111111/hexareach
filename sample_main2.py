@@ -13,6 +13,8 @@ import hexareach as hxr
 if __name__ == "__main__":
     graph = hxr.GraphDisplayer()
 
+    # DisplayFlag の display_leg_power を True にすることで
+    # 力の計算を行って描画することができます.
     flag = hxr.DisplayFlag()
     flag.display_leg_power = True
     flag.display_table = False
@@ -23,6 +25,5 @@ if __name__ == "__main__":
         hxr.PhantomxMk2Param(),
         display_flag=flag,
         leg_power_step=5.0,
-        # set file name to save the image.
         image_file_name="result/sample_main2.png",
     )

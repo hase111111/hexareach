@@ -22,4 +22,5 @@ if __name__ == "__main__":
     # ホイールクリックによって，逆運動学解を反転させることができます.
     graph.display(
         hxr.PhantomxMk2Param(),
+        # 保存先のファイル名を指定することができます.
         image_file_name="result/sample_main1.png")
