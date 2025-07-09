@@ -13,7 +13,8 @@ from .hexapod_param_protocol import HexapodParamProtocol
 
 class XrR1Param(HexapodParamProtocol):
     """
-    XR-R1のパラメータを持つクラス．
+    XiaoR Geek社製のロボット XR-R1 のパラメータを持つクラス．
+    参考 : https://www.xiaorgeek.net/products/
     """
     coxa_length: float = 45.0  # [mm]
     femur_length: float = 75.0  # [mm]

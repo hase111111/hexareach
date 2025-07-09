@@ -13,7 +13,7 @@ from .hexapod_param_protocol import HexapodParamProtocol
 
 class PhantomxMk2Param(HexapodParamProtocol):
     """
-    Class for storing PhantomX parameters.
+    Trossen Robotics 社製のロボット PhantomX MK2 のパラメータを持つクラス.
     """
     coxa_length: float = 52.0  # [mm]
     femur_length: float = 66.0  # [mm]
