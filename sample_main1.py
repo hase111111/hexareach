@@ -12,7 +12,12 @@ import hexareach as hxr
 
 
 if __name__ == "__main__":
-    # Display the phantom X graph.
+    # まずは，GraphDisplayer クラスをインスタンス化してください．
     graph = hxr.GraphDisplayer()
 
-    graph.display(hxr.PhantomxMk2Param())
+    # display 関数を呼ぶことで描画されます．
+    # マウスカーソルを動かすことで，脚先の位置を変化させることができます.
+    # 左クリックすることで result/sample_main1.png に画像を保存できます.
+    graph.display(
+        hxr.PhantomxMk2Param(),
+        image_file_name="result/sample_main1.png")
