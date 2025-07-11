@@ -27,8 +27,8 @@ if __name__ == "__main__":
         theta1_min: float = math.radians(0.0)  # [rad]
         theta2_max: float = math.radians(100.0)  # [rad]
         theta2_min: float = math.radians(-100)  # [rad]
-        theta3_max: float = math.radians(120.0)  # [rad]
-        theta3_min: float = math.radians(-120.0)  # [rad]
+        theta3_max: float = math.radians(100.0)  # [rad]
+        theta3_min: float = math.radians(-100.0)  # [rad]
         torque_max: float = 0.0  # [N*mm] ストールトルク(停動トルク)
         approx_min_radius: float = 0  # [mm]
         approx_max_radius: float = 250.0  # [mm]
