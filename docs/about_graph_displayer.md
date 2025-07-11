@@ -7,7 +7,7 @@
 これらを変更することで，脚の図示をカスタマイズできます．
 
 <div align="center">
-    <img src="./img/simple.jpg" width="70%" class="center">
+    <img src="./img/simple.jpg" width="70%" class="center" border="1">
 </div>
 
 ## 目次
