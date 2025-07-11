@@ -6,7 +6,7 @@ Trossen Robotics社製の6脚ロボット，PhantomX のような，yaw - pitch 
 プログラムのパラメータを調整することで，様々な脚ロボットの表示に対応可能です．
 
 <div align="center">
-    <img src="./img/leg_range.gif" width="70%" class="center">
+    <img src="/docs/img/leg_range.gif" width="70%" class="center">
 </div>
 
 ## 概要
@@ -65,7 +65,7 @@ sudo apt-get install python3-tk
 
 脚の図示はGraphDisplayerクラスを用いて行います．
 下記のコードを実行すると，脚の可動域が表示されます．
-詳細な使用方法については，[GraphDisplayerについて](docs/about_graph_displayer.md)を参照してください．
+詳細な使用方法については，[GraphDisplayerについて](/docs/about_graph_displayer.md)を参照してください．
 
 ```python
 import hexareach as hxr
@@ -78,7 +78,7 @@ graph.display(hxr.PhantomxMk2Param())
 
 脚のパラメータは構造体HexapodParamを用いて設定します．
 パラメータを変更することで，他の脚ロボットにも対応可能です．
-詳細な使用方法については，[HexapodParamについて](docs/about_hexapod_param.md)を参照してください．
+詳細な使用方法については，[HexapodParamについて](/docs/about_hexapod_param.md)を参照してください．
 
 ```python
 import hexareach as hxr
