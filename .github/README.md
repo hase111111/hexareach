@@ -6,7 +6,7 @@ Trossen Robotics社製の6脚ロボット，PhantomX のような，yaw - pitch 
 プログラムのパラメータを調整することで，様々な脚ロボットの表示に対応可能です．
 
 <div align="center">
-    <img src="/docs/img/leg_range.gif" width="70%" class="center">
+    <img src="/docs/img/leg_range.gif" width="70%" class="center" border="1">
 </div>
 
 ## 概要
@@ -25,9 +25,9 @@ yaw軸周りの回転は無視し，2次元平面上で表示を行います．
 また，指令値がサーボモータの可動域を超える場合には，エラーを出力します．
 
 <div align="center">
-    <img src="/docs/img/table.jpg" width="95%">
+    <img src="/docs/img/table.jpg" width="95%" border="1">
     <p>
-        <img src="/docs/img/coordinate_axis.png" width="40%">
+        <img src="/docs/img/coordinate_axis.png" width="40%" border="1">
     </p>
 </div>
 
