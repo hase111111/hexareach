@@ -6,10 +6,7 @@ Trossen Robotics社製の6脚ロボット，PhantomX のような，yaw - pitch 
 プログラムのパラメータを調整することで，様々な脚ロボットの表示に対応可能です．
 
 <div align="center">
-    <img src="/docs/img/table.jpg" width="95%">
-    <p>
-        <img src="/docs/img/coordinate_axis.png" width="40%">
-    </p>
+    <img src="./img/leg_range.gif" width="70%" class="center">
 </div>
 
 ## 概要
@@ -26,6 +23,13 @@ yaw軸周りの回転は無視し，2次元平面上で表示を行います．
 逆運動学は解析解を用いて計算しています．
 これらに加えて，実機を動作させるためのサーボモータへの指令値の算出も行うことができます．
 また，指令値がサーボモータの可動域を超える場合には，エラーを出力します．
+
+<div align="center">
+    <img src="/docs/img/table.jpg" width="95%">
+    <p>
+        <img src="/docs/img/coordinate_axis.png" width="40%">
+    </p>
+</div>
 
 ## 使い方
 
@@ -66,8 +70,8 @@ sudo apt-get install python3-tk
 ```python
 import hexareach as hxr
 
-gd = hxr.GraphDisplayer()
-gd.display()
+graph = hxr.GraphDisplayer()
+graph.display(hxr.PhantomxMk2Param())
 ```
 
 ### HexapodParam
@@ -79,13 +83,23 @@ gd.display()
 ```python
 import hexareach as hxr
 
-hp = hxr.HexapodParam()
-hp.coxa_length = 0.0
-hp.femur_length = 100.0
-hp.tibia_length = 100.0
+class OriginalRobotParam(hxr.HexapodParamProtocol):
+    coxa_length: float = 0.0  # [mm]
+    femur_length: float = 100.0  # [mm]
+    tibia_length: float = 100.0  # [mm]
+    theta1_max: float = math.radians(0.0)  # [rad]
+    theta1_min: float = math.radians(0.0)  # [rad]
+    theta2_max: float = math.radians(100.0)  # [rad]
+    theta2_min: float = math.radians(-100)  # [rad]
+    theta3_max: float = math.radians(100.0)  # [rad]
+    theta3_min: float = math.radians(-100.0)  # [rad]
+    torque_max: float = 0.0  # [N*mm] ストールトルク(停動トルク)
+    approx_min_radius: float = 0  # [mm]
+    approx_max_radius: float = 250.0  # [mm]
 
 gd = hxr.GraphDisplayer(hp)
-gd.display(hp)
+param = OriginalRobotParam()
+gd.display(param)
 ```
 
 ### 操作方法
@@ -95,6 +109,7 @@ gd.display(hp)
 また，間接の可動範囲外に出た場合は，ジョイントが赤色に変わります．
 
 左クリックすると脚先の位置が固定され，画像が保存されます．
+右クリックすると，脚先の位置がリセットされます．
 ホイールクリックすると，もうひとつの逆運動学解に切り替わります．
 
 ## ライセンス

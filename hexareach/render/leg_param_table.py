@@ -7,7 +7,7 @@ leg_param_table.py
 # https://opensource.org/licenses/mit-license.php
 
 import math
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 from matplotlib.axes import Axes
 from matplotlib.table import Cell
@@ -19,7 +19,11 @@ class LegParamTable:
     更新する機能を提供します.
     """
 
-    def __init__(self, ax: Axes) -> None:
+    def __init__(self, ax: Optional[Axes]) -> None:
+        if ax is None:
+            self._show = False
+            return
+
         self._ax = ax
 
         table_data = [
@@ -54,6 +58,8 @@ class LegParamTable:
             if i >= 0 and j >= 0:
                 self._cell_info[(i, j)] = cell
 
+        self._show = True
+
 
     def on_update(
             self,
@@ -64,6 +70,8 @@ class LegParamTable:
         """
         テーブルの内容を更新するメソッド.
         """
+        if not self._show:
+            return
 
         self._cell_info[(1, 1)].set_text_props(  # type: ignore
             text=f"{math.degrees(joint_angles[0]):.3f}"

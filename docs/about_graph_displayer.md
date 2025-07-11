@@ -42,31 +42,57 @@
 ### 引数
 
 ```python
-def display(self, hexapod_pram = HexapodParam(), *, 
-            display_table = True,
-            display_leg_power = False,
-            display_approximated_graph = True,
-            display_mouse_grid = True,
-            display_ground_line = True,
-            display_circle = True, 
-            display_wedge = True,
-            x_min = -100.0, x_max = 300.0, z_min = -200.0, z_max = 200.0,
-            leg_power_step = 2.0,
-            approx_fill = True, color_approx = 'green', alpha_approx = 0.5, 
-            color_rom = 'black', alpha_upper_rom = 0.3, alpha_lower_rom = 1.0,
-            color_mouse_grid = 'black', alpha_mouse_grid = 0.5,
-            image_file_name = "result/img_main.png",
-            ground_z = -25.0,
-            do_not_show = False) -> Tuple[plt.Figure, axes.Axes, axes.Axes]:
+def display(
+    self,
+    hexapod_pram : HexapodParamProtocol,
+    *,
+    rect: Tuple[float, float, float, float] = (-100.0, 300.0, -200.0, 200.0),
+    display_flag: DisplayFlag = DisplayFlag(),
+    color_param: ColorParam = ColorParam(),
+    leg_power_step: float =2.0,
+    image_file_name: str="result/img_main.png",
+    ground_z: float =-25.0,
+    do_not_show: bool =False,
+    figure : Optional[Figure] = None,
+    axes: Optional[Axes] = None,
+    axes_table: Optional[Axes] = None,
+    ) -> None:
+    ...
 ```
 
 ### hexapod_pram
 
-構造体`HexapodParam`のインスタンスを指定します．
-構造体`HexapodParam`は脚ロボットのパラメータを保持しており，
-デフォルト値はPhantomX Mk-2のパラメータを持っています．
+`HexapodParamProtocol`を継承したクラスのインスタンスを指定します．
+`HexapodParamProtocol`は脚ロボットのパラメータを保持するインターフェースです．
+この引数のみは必須です．
+詳細は[HexapodParamProtocolについて](docs/about_hexapod_param.md)を参照してください．
 
-### display_table
+### rect
+
+表示する範囲を指定します．単位はmmです．
+float のタプルで，(x_min, x_max, z_min, z_max)の順に指定します．
+
+近似された可動範囲のグラフと，脚先力の計算に影響します．
+過不足なく可動範囲を囲むように設定してください．
+
+### display_flag
+
+`DisplayFlag`クラスのインスタンスを指定します．
+`DisplayFlag`クラスは，表示するグラフの設定を行うクラスです．
+
+```python
+class DisplayFlag:
+    approximated_graph_filled: bool = True
+    leg_circle_displayed: bool = True
+    leg_wedge_displayed: bool = True
+    display_table: bool = True
+    display_leg_power: bool = False
+    display_approximated_graph: bool = False
+    display_mouse_grid: bool = True
+    display_ground_line: bool = False
+```
+
+#### display_table
 
 Trueの場合，テーブルを表示します．
 
@@ -74,7 +100,7 @@ Trueの場合，テーブルを表示します．
     <img src="./img/table.jpg" width="80%" class="center">
 </div>
 
-### display_leg_power
+#### display_leg_power
 
 Trueの場合，脚先力を表示します．
 計算に時間がかかるため，不必要な場合はFalseを推奨します．
@@ -84,16 +110,15 @@ Trueの場合，脚先力を表示します．
     <img src="./img/power.jpg" width="50%" class="center">
 </div>
 
-### display_approximated_graph
+#### display_approximated_graph
 
 Trueの場合，近似された可動範囲のグラフを表示します．
-近似された可動範囲については，卒業論文を参照してください．
 
 <div align="center">
     <img src="./img/approx.jpg" width="50%" class="center">
 </div>
 
-### display_mouse_grid
+#### display_mouse_grid
 
 Trueの場合，マウス追従するグリッド線を表示します．
 
@@ -101,7 +126,7 @@ Trueの場合，マウス追従するグリッド線を表示します．
     <img src="./img/mouse.jpg" width="50%" class="center">
 </div>
 
-### display_ground_line
+#### display_ground_line
 
 Trueの場合，地面の線を表示します．
 
@@ -109,7 +134,7 @@ Trueの場合，地面の線を表示します．
     <img src="./img/ground.jpg" width="50%" class="center">
 </div>
 
-### display_circle
+#### leg_circle_displayed
 
 Trueの場合，脚の可動範囲を円で表示します．
 
@@ -117,7 +142,7 @@ Trueの場合，脚の可動範囲を円で表示します．
     <img src="./img/circle.jpg" width="50%" class="center">
 </div>
 
-### display_wedge
+#### leg_wedge_displayed
 
 Trueの場合，脚の可動範囲を扇形で表示します．
 
@@ -125,16 +150,14 @@ Trueの場合，脚の可動範囲を扇形で表示します．
     <img src="./img/wedge.jpg" width="50%" class="center">
 </div>
 
-### x_min, x_max, z_min, z_max
+#### approximated_graph_filled
 
-表示する範囲を指定します．単位はmmです．
-デフォルトの範囲は，PhantomX Mk-2の可動範囲を囲むように設定されています．
+Trueの場合，近似された可動範囲のグラフを塗りつぶします．
 
-近似された可動範囲のグラフと，脚先力の計算に影響します．
-過不足なく可動範囲を囲むように設定してください．
+### color_param
 
-もし，うまく表示されない場合は，1度`display_leg_power`と`display_approximated_graph`をFalseにして，
-表示される範囲を確認してください．
+`ColorParam`クラスのインスタンスを指定します．
+`ColorParam`クラスは，グラフの色を設定するクラスです.
 
 ### leg_power_step
 
@@ -143,38 +166,6 @@ Trueの場合，脚の可動範囲を扇形で表示します．
 範囲にもよりますが，400mm*400mmの範囲であれば，2.0程度で十分です．
 
 マイナスの値は指定できません．
-
-### approx_fill
-
-Trueの場合，近似された可動範囲のグラフを塗りつぶします．
-
-### color_approx
-
-近似された可動範囲のグラフの色を指定します．
-
-### alpha_approx
-
-近似された可動範囲のグラフの透明度を指定します．
-
-### color_rom
-
-脚の可動範囲のグラフの色を指定します．
-
-### alpha_upper_rom
-
-脚の可動範囲のグラフの上側の透明度を指定します．
-
-### alpha_lower_rom
-
-脚の可動範囲のグラフの下側の透明度を指定します．
-
-### color_mouse_grid
-
-マウス追従するグリッド線の色を指定します．
-
-### alpha_mouse_grid
-
-マウス追従するグリッド線の透明度を指定します．
 
 ### image_file_name
 
@@ -187,29 +178,11 @@ Trueの場合，近似された可動範囲のグラフを塗りつぶします�
 ### do_not_show
 
 Trueの場合，グラフを表示しません．
-正確には，`plt.show()`を実行しません．
-グラフを表示する前に，グラフに追加で描画を行いたい場合に使用します．
-具体的な使い方は[sample_main4.py](../sample_main4.py)を参照してください．
+通常, displayメソッドの最後に`plt.show()`が実行されますが,
+この引数をTrueにすると，`plt.show()`が実行されません．
 
-### 戻り値
+### figure, axes, axes_table
 
-displayメソッドは，`matplotlib.pyplot.subplots()`の戻り値を返します．
-戻り値は，Figureオブジェクトと，Axesオブジェクトが2つです．
-
-Figureオブジェクトは，グラフ全体を表します．
-また，Axesオブジェクトは，グラフの各部分を表します．
-1つめAxesオブジェクトは脚の可動範囲のグラフ，2つめのAxesオブジェクトは間接角度のテーブルです．
-
-```python
-import phantom_cross as pc
-
-gd = pc.GraphDisplayer()
-fig, ax1, ax2 = gd.display(do_not_show = True)
-
-# ここに追加で描画を行う
-ax1.plot([0, 100], [0, 100], color = 'red')
-
-plt.show()
-```
-
-こちらも詳しくは[sample_main4.py](../sample_main4.py)を参照してください．
+`matplotlib.figure.Figure`と`matplotlib.axes.Axes`のインスタンスを指定します．
+通常は指定する必要はありません．（内部で生成されます）
+ただし，すでに生成されたFigureやAxesを使用したい場合は，これらの引数を指定することができます．
