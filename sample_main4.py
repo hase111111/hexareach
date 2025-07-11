@@ -1,6 +1,6 @@
 """
 sample_main4.py
-Sample code for adding dots and lines to a graph
+グラフに点や線を追加してから表示するサンプル.
 """
 
 # Copyright (c) 2023-2025 Taisei Hasegawa
@@ -21,12 +21,13 @@ if __name__ == "__main__":
     flag = hxr.DisplayFlag()
     flag.display_table = False
 
-    # Add sample points.
+    # グラフを表示する前に, 点を追加
     ax.plot([0, 50, 100, 150, 200], [0, 50, 100, 150, 200], "rx")  # type: ignore[no-untyped-call]
 
-    # Add a line.
+    # グラフを表示する前に, 線を追加
     ax.plot([0, 200], [0, -200], "b-")  # type: ignore[no-untyped-call]
 
+    # グラフを表示
     graph.display(
         hxr.PhantomxMk2Param(),
         display_flag=flag,
